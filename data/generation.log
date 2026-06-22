@@ -2090,3 +2090,23 @@
 2026-06-22 10:00:45,494 [INFO] 换 key 重试 (1/4 已用)
 2026-06-22 10:00:45,494 [ERROR] API最终失败: Error code: 429 - {'error': {'code': '429', 'message': 'Too many requests', 'type': 'limitation'}}
 2026-06-22 10:00:56,531 [INFO] HTTP Request: POST https://token-plan-cn.xiaomimimo.com/v1/chat/completions "HTTP/1.1 200 OK"
+2026-06-22 10:00:57,588 [INFO] HTTP Request: POST https://token-plan-cn.xiaomimimo.com/v1/chat/completions "HTTP/1.1 429 Too Many Requests"
+2026-06-22 10:00:57,589 [WARNING] Key tp-cazru... 被429，冷却 41s
+2026-06-22 10:00:57,589 [INFO] 换 key 重试 (3/4 已用)
+2026-06-22 10:00:57,596 [INFO] Git 自动推送成功 (批次 7)
+2026-06-22 10:01:50,224 [INFO] HTTP Request: POST https://token-plan-cn.xiaomimimo.com/v1/chat/completions "HTTP/1.1 200 OK"
+2026-06-22 10:01:52,252 [INFO] HTTP Request: POST https://token-plan-cn.xiaomimimo.com/v1/chat/completions "HTTP/1.1 429 Too Many Requests"
+2026-06-22 10:01:52,252 [WARNING] Key tp-cbe9w... 被429，冷却 22s
+2026-06-22 10:01:52,252 [INFO] 换 key 重试 (2/4 已用)
+2026-06-22 10:01:58,437 [INFO] HTTP Request: POST https://token-plan-cn.xiaomimimo.com/v1/chat/completions "HTTP/1.1 200 OK"
+2026-06-22 10:02:00,331 [INFO] HTTP Request: POST https://token-plan-cn.xiaomimimo.com/v1/chat/completions "HTTP/1.1 429 Too Many Requests"
+2026-06-22 10:02:00,332 [WARNING] Key tp-cbe9w... 被429，冷却 24s
+2026-06-22 10:02:00,332 [INFO] 换 key 重试 (2/4 已用)
+2026-06-22 10:02:01,199 [INFO] HTTP Request: POST https://token-plan-cn.xiaomimimo.com/v1/chat/completions "HTTP/1.1 429 Too Many Requests"
+2026-06-22 10:02:01,200 [WARNING] Key tp-cwzeg... 被429，冷却 40s
+2026-06-22 10:02:01,200 [INFO] 换 key 重试 (3/4 已用)
+2026-06-22 10:02:23,722 [INFO] HTTP Request: POST https://token-plan-cn.xiaomimimo.com/v1/chat/completions "HTTP/1.1 200 OK"
+2026-06-22 10:02:24,723 [ERROR] API最终失败: Error code: 429 - {'error': {'code': '429', 'message': 'Too many requests', 'type': 'limitation'}}
+2026-06-22 10:02:43,277 [ERROR] API最终失败: Request timed out.
+2026-06-22 10:02:43,278 [INFO] 进度: 40/500 | 成功: 7 | 缓存: 10 | Key统计: {'tp-ch31h...': {'success': 0, 'fail': 0, '429': 0}, 'tp-cbe9w...': {'success': 0, 'fail': 0, '429': 0}, 'tp-cwzeg...': {'success': 0, 'fail': 0, '429': 0}, 'tp-cazru...': {'success': 0, 'fail': 0, '429': 0}}
+2026-06-22 10:02:47,431 [INFO] HTTP Request: POST https://token-plan-cn.xiaomimimo.com/v1/chat/completions "HTTP/1.1 200 OK"
