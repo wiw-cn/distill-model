@@ -221,3 +221,5 @@
 2026-06-22 06:20:13,207 [WARNING] Key tp-cjc3i... 被429，冷却 45s
 2026-06-22 06:20:13,208 [WARNING] 所有 key 都429，等待 22.7s 后重试 (3/5)
 2026-06-22 06:20:24,106 [INFO] HTTP Request: POST https://token-plan-cn.xiaomimimo.com/v1/chat/completions "HTTP/1.1 200 OK"
+2026-06-22 06:20:25,041 [INFO] Git 自动推送成功 (批次 6)
+2026-06-22 06:20:42,147 [INFO] HTTP Request: POST https://token-plan-cn.xiaomimimo.com/v1/chat/completions "HTTP/1.1 200 OK"
