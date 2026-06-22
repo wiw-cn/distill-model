@@ -888,3 +888,21 @@
 2026-06-22 08:07:35,719 [WARNING] Key tp-csems... 被429，冷却 12s
 2026-06-22 08:07:35,719 [INFO] 换 key 重试 (1/4 已用)
 2026-06-22 08:07:54,191 [INFO] HTTP Request: POST https://token-plan-cn.xiaomimimo.com/v1/chat/completions "HTTP/1.1 200 OK"
+2026-06-22 08:07:54,928 [INFO] HTTP Request: POST https://token-plan-cn.xiaomimimo.com/v1/chat/completions "HTTP/1.1 429 Too Many Requests"
+2026-06-22 08:07:54,928 [WARNING] Key tp-csems... 被429，冷却 12s
+2026-06-22 08:07:54,928 [INFO] 换 key 重试 (1/4 已用)
+2026-06-22 08:07:55,326 [INFO] Git 自动推送成功 (批次 14)
+2026-06-22 08:07:55,937 [INFO] HTTP Request: POST https://token-plan-cn.xiaomimimo.com/v1/chat/completions "HTTP/1.1 429 Too Many Requests"
+2026-06-22 08:07:55,937 [WARNING] Key tp-cjc3i... 被429，冷却 21s
+2026-06-22 08:07:55,937 [INFO] 换 key 重试 (2/4 已用)
+2026-06-22 08:07:56,719 [INFO] HTTP Request: POST https://token-plan-cn.xiaomimimo.com/v1/chat/completions "HTTP/1.1 401 Unauthorized"
+2026-06-22 08:08:17,072 [INFO] HTTP Request: POST https://token-plan-cn.xiaomimimo.com/v1/chat/completions "HTTP/1.1 200 OK"
+2026-06-22 08:08:17,809 [INFO] HTTP Request: POST https://token-plan-cn.xiaomimimo.com/v1/chat/completions "HTTP/1.1 401 Unauthorized"
+2026-06-22 08:08:22,141 [INFO] HTTP Request: POST https://token-plan-cn.xiaomimimo.com/v1/chat/completions "HTTP/1.1 429 Too Many Requests"
+2026-06-22 08:08:22,142 [WARNING] Key tp-cbe9w... 被429，冷却 25s
+2026-06-22 08:08:22,142 [INFO] 换 key 重试 (2/4 已用)
+2026-06-22 08:08:31,171 [INFO] HTTP Request: POST https://token-plan-cn.xiaomimimo.com/v1/chat/completions "HTTP/1.1 200 OK"
+2026-06-22 08:08:32,974 [INFO] HTTP Request: POST https://token-plan-cn.xiaomimimo.com/v1/chat/completions "HTTP/1.1 401 Unauthorized"
+2026-06-22 08:08:50,122 [INFO] HTTP Request: POST https://token-plan-cn.xiaomimimo.com/v1/chat/completions "HTTP/1.1 200 OK"
+2026-06-22 08:08:51,935 [INFO] HTTP Request: POST https://token-plan-cn.xiaomimimo.com/v1/chat/completions "HTTP/1.1 401 Unauthorized"
+2026-06-22 08:09:48,417 [INFO] HTTP Request: POST https://token-plan-cn.xiaomimimo.com/v1/chat/completions "HTTP/1.1 200 OK"
