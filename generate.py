@@ -6,7 +6,12 @@
 基于 minimax-m2.5 模型，自动生成复杂领域的极其复杂的问题（含伪命题和含有错误的命题），
 然后调用同一模型进行逐步推理回答，生成用于蒸馏的高质量训练数据。
 
-配置通过环境变量传入，适合 GitHub Actions 定时运行。
+特性：
+- 多 API Key 轮询（避免单 key 速率限制）
+- 生成一条存储一条（即时持久化，进程崩溃不丢数据）
+- 429 智能退避重试
+- 邮件通知（可选）
+- 断点续传
 """
 
 import json
@@ -19,7 +24,7 @@ import argparse
 import smtplib
 import ssl
 from datetime import datetime
-from typing import Optional
+from typing import Optional, List
 from concurrent.futures import ThreadPoolExecutor, as_completed
 from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
@@ -33,13 +38,18 @@ except ImportError:
     from openai import OpenAI
 
 # ==================== 配置（从环境变量读取）====================
+
+# 支持多 key：API_KEY 或 API_KEYS（逗号分隔）
 API_KEY = os.environ.get("API_KEY", "")
+API_KEYS_STR = os.environ.get("API_KEYS", "")
+API_KEYS: List[str] = [k.strip() for k in API_KEYS_STR.split(",") if k.strip()] if API_KEYS_STR else ([API_KEY] if API_KEY else [])
+
 BASE_URL = os.environ.get("BASE_URL", "https://ollama.com/v1")
 MODEL = os.environ.get("MODEL", "minimax-m2.5")
 COUNT = int(os.environ.get("COUNT", "500"))
 WORKERS = int(os.environ.get("WORKERS", "5"))
 
-# 输出目录（GitHub Actions 中通常设为仓库目录）
+# 输出目录
 OUTPUT_DIR = os.environ.get("OUTPUT_DIR", "distill_output")
 
 # 邮件通知配置（可选）
@@ -47,7 +57,7 @@ SMTP_HOST = os.environ.get("SMTP_HOST", "")
 SMTP_PORT = int(os.environ.get("SMTP_PORT", "587"))
 SMTP_USER = os.environ.get("SMTP_USER", "")
 SMTP_PASS = os.environ.get("SMTP_PASS", "")
-NOTIFY_EMAIL = os.environ.get("NOTIFY_EMAIL", "")  # 收件人邮箱
+NOTIFY_EMAIL = os.environ.get("NOTIFY_EMAIL", "")
 
 # 日志配置
 os.makedirs(OUTPUT_DIR, exist_ok=True)
@@ -66,7 +76,6 @@ logger = logging.getLogger(__name__)
 DOMAINS = {
     "logic": {
         "name": "逻辑推理",
-        "description": "形式逻辑、命题逻辑、谓词逻辑、悖论、逻辑谬误识别",
         "subtopics": [
             "命题逻辑中的蕴含与等价关系",
             "三段论推理的有效性判断",
@@ -82,7 +91,6 @@ DOMAINS = {
     },
     "math": {
         "name": "数学",
-        "description": "高等数学、数论、概率统计、抽象代数、拓扑学、组合数学",
         "subtopics": [
             "高等数学中的极限与连续性证明",
             "数论中的素数分布与同余问题",
@@ -98,7 +106,6 @@ DOMAINS = {
     },
     "code": {
         "name": "代码与算法",
-        "description": "算法设计、数据结构、代码调试、复杂度分析、系统设计",
         "subtopics": [
             "动态规划的状态转移方程设计",
             "图算法中的最短路径与最小生成树",
@@ -119,7 +126,6 @@ QUESTION_TYPES = ["true_proposition", "false_proposition", "flawed_proposition"]
 
 # ==================== 工具函数 ====================
 def extract_json(text: str) -> Optional[dict]:
-    """从文本中提取JSON对象"""
     if not text:
         return None
     try:
@@ -149,17 +155,68 @@ def extract_json(text: str) -> Optional[dict]:
 
 
 def ensure_step_format(text: str) -> str:
-    """确保回答包含 Step 1-5 和最终结论"""
     if "Step 1:" in text and "Step 2:" in text and "Step 3:" in text:
         return text
     return text
 
 
+# ==================== 多 Key 轮询管理器 ====================
+class KeyRotator:
+    """多 API Key 轮询管理，自动跳过被限流的 key"""
+
+    def __init__(self, keys: List[str], base_url: str, model: str):
+        self.keys = keys
+        self.base_url = base_url
+        self.model = model
+        self._index = 0
+        self._lock = threading.Lock()
+        self._cooldown: dict = {}  # key -> 解除冷却时间
+        self._key_stats = {k: {"success": 0, "fail": 0, "429": 0} for k in keys}
+
+    def get_next_key(self) -> str:
+        """获取下一个可用的 key"""
+        with self._lock:
+            now = time.time()
+            # 先尝试找不在冷却期的 key
+            for _ in range(len(self.keys)):
+                key = self.keys[self._index % len(self.keys)]
+                self._index += 1
+                cooldown_end = self._cooldown.get(key, 0)
+                if now >= cooldown_end:
+                    return key
+            # 所有 key 都在冷却，找最快解除的
+            key = min(self.keys, key=lambda k: self._cooldown.get(k, 0))
+            wait = self._cooldown.get(key, 0) - now
+            if wait > 0:
+                logger.warning(f"所有 key 都在冷却，等待 {wait:.1f}s")
+                time.sleep(wait)
+            return key
+
+    def mark_success(self, key: str):
+        with self._lock:
+            self._key_stats[key]["success"] += 1
+
+    def mark_429(self, key: str, cooldown_seconds: float = 60):
+        """标记 key 被 429，进入冷却期"""
+        with self._lock:
+            self._key_stats[key]["429"] += 1
+            self._cooldown[key] = time.time() + cooldown_seconds
+            logger.warning(f"Key {key[:8]}... 被429，冷却 {cooldown_seconds:.0f}s")
+
+    def mark_fail(self, key: str):
+        with self._lock:
+            self._key_stats[key]["fail"] += 1
+
+    def get_stats(self) -> dict:
+        with self._lock:
+            return {k[:8] + "...": v for k, v in self._key_stats.items()}
+
+
 # ==================== API 客户端 ====================
 class ModelClient:
-    def __init__(self, api_key: str, base_url: str, model: str, timeout: int = 120):
-        self.client = OpenAI(api_key=api_key, base_url=base_url, timeout=timeout, max_retries=0)
-        self.model = model
+    def __init__(self, key_rotator: KeyRotator, timeout: int = 120):
+        self.key_rotator = key_rotator
+        self.timeout = timeout
         self.max_retries = 5
         self.retry_delay = 3
         self._lock = threading.Lock()
@@ -167,11 +224,17 @@ class ModelClient:
     def chat(self, messages: list, temperature: float = 0.7, max_tokens: int = 4096) -> Optional[str]:
         last_error = None
         current_max_tokens = max_tokens
+        used_keys = set()
+
         for attempt in range(self.max_retries):
+            key = self.key_rotator.get_next_key()
+            used_keys.add(key)
+
             try:
+                client = OpenAI(api_key=key, base_url=self.key_rotator.base_url, timeout=self.timeout, max_retries=0)
                 with self._lock:
-                    response = self.client.chat.completions.create(
-                        model=self.model,
+                    response = client.chat.completions.create(
+                        model=self.key_rotator.model,
                         messages=messages,
                         temperature=temperature,
                         max_tokens=current_max_tokens,
@@ -184,20 +247,30 @@ class ModelClient:
                     time.sleep(1)
                     continue
                 if content:
+                    self.key_rotator.mark_success(key)
                     return content.strip()
                 return None
             except Exception as e:
                 last_error = e
                 err_str = str(e).lower()
-                # 429 速率限制：指数退避等待
-                if "429" in err_str or "rate limit" in err_str or "too many requests" in err_str:
+                # 429 速率限制：标记 key 冷却，指数退避
+                if "429" in err_str or "rate limit" in err_str or "too many requests" in err_str or "usage limit" in err_str:
+                    cooldown = min(2 ** attempt * 10 + random.uniform(0, 5), 300)
+                    self.key_rotator.mark_429(key, cooldown)
+                    # 如果还有未尝试的 key，立即换 key
+                    if len(used_keys) < len(self.key_rotator.keys):
+                        logger.info(f"换 key 重试 ({len(used_keys)}/{len(self.key_rotator.keys)} 已用)")
+                        continue
+                    # 所有 key 都 429 了，等待
                     wait = min(2 ** attempt * 5 + random.uniform(0, 3), 300)
-                    logger.warning(f"遇到429速率限制，等待 {wait:.1f}s 后重试 ({attempt + 1}/{self.max_retries})")
+                    logger.warning(f"所有 key 都429，等待 {wait:.1f}s 后重试 ({attempt + 1}/{self.max_retries})")
                     time.sleep(wait)
+                    used_keys.clear()
                     continue
                 wait = self.retry_delay * (attempt + 1) + random.uniform(0, 2)
                 logger.debug(f"API失败 ({attempt + 1}/{self.max_retries}): {e}, 等待{wait:.1f}s")
                 time.sleep(wait)
+
         logger.error(f"API最终失败: {last_error}")
         return None
 
@@ -293,7 +366,7 @@ Step 5: 深入探讨 — 深层含义、推广、反例
                 "answer": processed,
                 "question_type": question_type,
                 "domain": domain,
-                "model": self.client.model,
+                "model": self.key_rotator.model if hasattr(self, 'key_rotator') else "unknown",
                 "timestamp": datetime.now().isoformat()
             }
         return None
@@ -301,11 +374,12 @@ Step 5: 深入探讨 — 深层含义、推广、反例
 
 # ==================== 数据生成流水线 ====================
 class DistillationPipeline:
-    def __init__(self, api_key: str, base_url: str, model: str):
-        self.api_key = api_key
+    def __init__(self, keys: List[str], base_url: str, model: str):
+        self.keys = keys
         self.base_url = base_url
         self.model = model
-        self.client = ModelClient(api_key, base_url, model)
+        self.key_rotator = KeyRotator(keys, base_url, model)
+        self.client = ModelClient(self.key_rotator)
         self.question_generator = QuestionGenerator(self.client)
         self.answer_generator = AnswerGenerator(self.client)
         self.stats = {
@@ -351,67 +425,49 @@ class DistillationPipeline:
         return record
 
     def generate_batch(self, total_count: int, output_file: str, batch_size: int = 10) -> str:
-        logger.info(f"开始生成 {total_count} 条数据，模型: {self.model}")
-        records = []
-        if os.path.exists(output_file):
-            with open(output_file, "r", encoding="utf-8") as f:
-                for line in f:
-                    if line.strip():
-                        records.append(json.loads(line))
-            logger.info(f"加载已有记录: {len(records)} 条")
+        """串行模式：生成一条，立即存储一条"""
+        logger.info(f"开始串行生成 {total_count} 条，模型: {self.model}")
+        existing_count = self._count_existing(output_file)
         domains = list(DOMAINS.keys())
-        for i in range(total_count):
-            if len(records) >= total_count:
-                break
-            idx = len(records)
-            domain = domains[idx % len(domains)]
-            question_type = QUESTION_TYPES[idx % len(QUESTION_TYPES)]
+        for i in range(existing_count, total_count):
+            domain = domains[i % len(domains)]
+            question_type = QUESTION_TYPES[i % len(QUESTION_TYPES)]
             record = self.generate_one(domain, question_type)
             if record:
-                records.append(record)
+                # 生成一条，立即追加存储一条
                 with open(output_file, "a", encoding="utf-8") as f:
                     f.write(json.dumps(record, ensure_ascii=False) + "\n")
-            if (idx + 1) % batch_size == 0:
-                logger.info(f"进度: {len(records)}/{total_count} | 成功: {self.stats['success']}")
+            if (i + 1) % batch_size == 0:
+                logger.info(f"进度: {i + 1}/{total_count} | 成功: {self.stats['success']} | Key统计: {self.key_rotator.get_stats()}")
             time.sleep(2)
-        self._save_records(records, output_file)
-        stats_file = output_file.replace(".jsonl", "_stats.json")
-        with open(stats_file, "w", encoding="utf-8") as f:
-            json.dump(self.stats, f, ensure_ascii=False, indent=2)
-        logger.info(f"完成！共 {len(records)} 条")
+        self._save_stats(output_file)
         return output_file
 
     def generate_batch_concurrent(self, total_count: int, output_file: str, batch_size: int = 10, max_workers: int = 5) -> str:
+        """并发模式：每个 worker 独立 client，生成一条立即存储一条"""
         logger.info(f"开始并发 {total_count} 条 (workers={max_workers})，模型: {self.model}")
-        records = []
-        if os.path.exists(output_file):
-            with open(output_file, "r", encoding="utf-8") as f:
-                for line in f:
-                    if line.strip():
-                        records.append(json.loads(line))
-            logger.info(f"加载已有记录: {len(records)} 条")
+        existing_count = self._count_existing(output_file)
         domains = list(DOMAINS.keys())
-        completed = len(records)
+        completed = existing_count
+        success_count = 0
         file_lock = threading.Lock()
 
         def worker_task(idx):
-            if idx < len(records):
+            if idx < existing_count:
                 return None
-            client = ModelClient(self.api_key, self.base_url, self.model)
-            qgen = QuestionGenerator(client)
-            agen = AnswerGenerator(client)
+            # 每个 worker 独立创建 key rotator 和 client
+            worker_rotator = KeyRotator(self.keys, self.base_url, self.model)
+            worker_client = ModelClient(worker_rotator)
+            qgen = QuestionGenerator(worker_client)
+            agen = AnswerGenerator(worker_client)
             domain = domains[idx % len(domains)]
             qtype = QUESTION_TYPES[idx % len(QUESTION_TYPES)]
             qdata = qgen.generate_question(domain, qtype)
             if not qdata:
-                with self._stats_lock:
-                    self.stats["failed_generation"] += 1
-                return None
+                return {"error": "question_failed", "domain": domain, "type": qtype}
             adata = agen.generate_answer(qdata)
             if not adata:
-                with self._stats_lock:
-                    self.stats["failed_answer"] += 1
-                return None
+                return {"error": "answer_failed", "domain": domain, "type": qtype}
             return {
                 "id": f"distill_{datetime.now().strftime('%Y%m%d_%H%M%S')}_{idx:04d}",
                 "question": qdata["question"],
@@ -426,39 +482,55 @@ class DistillationPipeline:
                 "timestamp": datetime.now().isoformat()
             }
 
-        tasks = list(range(len(records), total_count))
+        tasks = list(range(existing_count, total_count))
         with ThreadPoolExecutor(max_workers=max_workers) as executor:
             futures = {executor.submit(worker_task, idx): idx for idx in tasks}
             for future in as_completed(futures):
                 idx = futures[future]
                 try:
-                    record = future.result()
-                    if record:
+                    result = future.result()
+                    if result and "error" not in result:
+                        # 生成一条，立即追加存储一条
                         with file_lock:
-                            records.append(record)
                             with open(output_file, "a", encoding="utf-8") as f:
-                                f.write(json.dumps(record, ensure_ascii=False) + "\n")
+                                f.write(json.dumps(result, ensure_ascii=False) + "\n")
+                            success_count += 1
+                    elif result and "error" in result:
+                        with self._stats_lock:
+                            if result["error"] == "question_failed":
+                                self.stats["failed_generation"] += 1
+                            else:
+                                self.stats["failed_answer"] += 1
                 except Exception as e:
                     logger.error(f"任务异常 (idx={idx}): {e}")
                 completed += 1
                 if completed % batch_size == 0:
-                    logger.info(f"进度: {completed}/{total_count} | 成功: {self.stats['success']}")
-        self._save_records(records, output_file)
+                    logger.info(f"进度: {completed}/{total_count} | 成功: {success_count} | Key统计: {self.key_rotator.get_stats()}")
+        self.stats["success"] = success_count
+        self._save_stats(output_file)
+        logger.info(f"完成！共 {success_count} 条新数据（总计 {existing_count + success_count} 条）")
+        return output_file
+
+    def _count_existing(self, output_file: str) -> int:
+        """统计已有记录数"""
+        count = 0
+        if os.path.exists(output_file):
+            with open(output_file, "r", encoding="utf-8") as f:
+                for line in f:
+                    if line.strip():
+                        count += 1
+            logger.info(f"加载已有记录: {count} 条")
+        return count
+
+    def _save_stats(self, output_file: str):
+        """保存统计文件"""
         stats_file = output_file.replace(".jsonl", "_stats.json")
         with open(stats_file, "w", encoding="utf-8") as f:
             json.dump(self.stats, f, ensure_ascii=False, indent=2)
-        logger.info(f"完成！共 {len(records)} 条")
-        return output_file
-
-    def _save_records(self, records: list, output_file: str):
-        with open(output_file, "w", encoding="utf-8") as f:
-            for record in records:
-                f.write(json.dumps(record, ensure_ascii=False) + "\n")
 
 
 # ==================== 邮件通知 ====================
 def send_notification(subject: str, body: str):
-    """发送邮件通知（配置可选）"""
     if not all([SMTP_HOST, SMTP_USER, SMTP_PASS, NOTIFY_EMAIL]):
         logger.info("邮件通知未配置，跳过")
         return
@@ -520,10 +592,11 @@ def main():
     parser.add_argument("--workers", type=int, default=None, help="并发线程数")
     args = parser.parse_args()
 
-    if not API_KEY:
-        print("错误: 未设置 API_KEY 环境变量")
+    if not API_KEYS:
+        print("错误: 未设置 API_KEY 或 API_KEYS 环境变量")
         return
 
+    logger.info(f"加载 {len(API_KEYS)} 个 API Key")
     os.makedirs(OUTPUT_DIR, exist_ok=True)
 
     if args.convert_only:
@@ -535,7 +608,7 @@ def main():
     timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
     output_file = args.output or os.path.join(OUTPUT_DIR, f"distill_data_{timestamp}.jsonl")
 
-    pipeline = DistillationPipeline(API_KEY, BASE_URL, MODEL)
+    pipeline = DistillationPipeline(API_KEYS, BASE_URL, MODEL)
 
     if args.concurrent:
         pipeline.generate_batch_concurrent(count, output_file, max_workers=workers)
@@ -546,13 +619,7 @@ def main():
     convert_to_training_format(output_file, training_file)
 
     # 发送完成通知
-    data_count = 0
-    try:
-        with open(output_file, "r", encoding="utf-8") as f:
-            data_count = sum(1 for _ in f if _.strip())
-    except Exception:
-        pass
-
+    data_count = pipeline._count_existing(output_file)
     notify_body = f"""蒸馏数据生成完成
 
 模型: {MODEL}
