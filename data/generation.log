@@ -822,3 +822,5 @@
 2026-06-22 08:00:31,095 [WARNING] Key tp-csems... 被429，冷却 12s
 2026-06-22 08:00:31,095 [INFO] 换 key 重试 (1/4 已用)
 2026-06-22 08:01:11,014 [INFO] HTTP Request: POST https://token-plan-cn.xiaomimimo.com/v1/chat/completions "HTTP/1.1 200 OK"
+2026-06-22 08:01:12,171 [INFO] Git 自动推送成功 (批次 10)
+2026-06-22 08:01:15,818 [INFO] HTTP Request: POST https://token-plan-cn.xiaomimimo.com/v1/chat/completions "HTTP/1.1 200 OK"
