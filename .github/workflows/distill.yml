@@ -22,17 +22,26 @@ jobs:
 
       - name: Generate data
         env:
+          # 支持单 key (API_KEY) 或多 key (API_KEYS，逗号分隔)
           API_KEY: ${{ secrets.API_KEY }}
+          API_KEYS: ${{ secrets.API_KEYS }}
           BASE_URL: ${{ secrets.BASE_URL }}
           MODEL: ${{ secrets.MODEL }}
           COUNT: ${{ secrets.COUNT || '500' }}
           WORKERS: ${{ secrets.WORKERS || '5' }}
           OUTPUT_DIR: ${{ github.workspace }}/data
+          # 邮件通知配置（可选）
+          SMTP_HOST: ${{ secrets.SMTP_HOST }}
+          SMTP_PORT: ${{ secrets.SMTP_PORT || '587' }}
+          SMTP_USER: ${{ secrets.SMTP_USER }}
+          SMTP_PASS: ${{ secrets.SMTP_PASS }}
+          NOTIFY_EMAIL: ${{ secrets.NOTIFY_EMAIL }}
         run: python generate.py --concurrent
 
-      - name: Commit and push
+      - name: Commit and push (保证数据存储)
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
           git add data/
-          git diff --cached --quiet || (git commit -m "Auto-generate distillation data $(date +%Y%m%d)" && git push)
+          # 即使部分失败，也提交已生成的数据
+          git diff --cached --quiet || (git commit -m "Auto-generate distillation data $(date +%Y%m%d_%H%M%S)" && git push)
