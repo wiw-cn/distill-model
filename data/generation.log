@@ -3538,3 +3538,80 @@
 2026-06-22 11:24:07,384 [WARNING] Key tp-cbe9w... 被429，冷却 25s
 2026-06-22 11:24:07,384 [INFO] 换 key 重试 (2/4 已用)
 2026-06-22 11:24:17,656 [INFO] HTTP Request: POST https://token-plan-cn.xiaomimimo.com/v1/chat/completions "HTTP/1.1 200 OK"
+2026-06-22 11:24:18,512 [INFO] HTTP Request: POST https://token-plan-cn.xiaomimimo.com/v1/chat/completions "HTTP/1.1 429 Too Many Requests"
+2026-06-22 11:24:18,513 [WARNING] Key tp-ch31h... 被429，冷却 14s
+2026-06-22 11:24:18,513 [INFO] 换 key 重试 (1/4 已用)
+2026-06-22 11:24:18,685 [INFO] Git 自动推送成功 (批次 26)
+2026-06-22 11:24:19,360 [INFO] HTTP Request: POST https://token-plan-cn.xiaomimimo.com/v1/chat/completions "HTTP/1.1 429 Too Many Requests"
+2026-06-22 11:24:19,361 [WARNING] Key tp-cbe9w... 被429，冷却 20s
+2026-06-22 11:24:19,361 [INFO] 换 key 重试 (2/4 已用)
+2026-06-22 11:24:48,061 [ERROR] API最终失败: Error code: 429 - {'error': {'code': '429', 'message': 'Too many requests', 'type': 'limitation'}}
+2026-06-22 11:24:55,951 [INFO] HTTP Request: POST https://token-plan-cn.xiaomimimo.com/v1/chat/completions "HTTP/1.1 200 OK"
+2026-06-22 11:24:57,770 [INFO] HTTP Request: POST https://token-plan-cn.xiaomimimo.com/v1/chat/completions "HTTP/1.1 429 Too Many Requests"
+2026-06-22 11:24:57,771 [WARNING] Key tp-cazru... 被429，冷却 80s
+2026-06-22 11:24:57,771 [WARNING] 所有 key 都429，等待 40.4s 后重试 (4/5)
+2026-06-22 11:25:07,895 [INFO] HTTP Request: POST https://token-plan-cn.xiaomimimo.com/v1/chat/completions "HTTP/1.1 200 OK"
+2026-06-22 11:25:09,749 [INFO] HTTP Request: POST https://token-plan-cn.xiaomimimo.com/v1/chat/completions "HTTP/1.1 429 Too Many Requests"
+2026-06-22 11:25:09,751 [WARNING] Key tp-cazru... 被429，冷却 81s
+2026-06-22 11:25:09,751 [WARNING] 所有 key 都429，等待 40.6s 后重试 (4/5)
+2026-06-22 11:25:29,270 [INFO] HTTP Request: POST https://token-plan-cn.xiaomimimo.com/v1/chat/completions "HTTP/1.1 200 OK"
+2026-06-22 11:25:30,272 [ERROR] API最终失败: Error code: 429 - {'error': {'code': '429', 'message': 'Too many requests', 'type': 'limitation'}}
+2026-06-22 11:25:36,694 [INFO] HTTP Request: POST https://token-plan-cn.xiaomimimo.com/v1/chat/completions "HTTP/1.1 200 OK"
+2026-06-22 11:25:38,553 [INFO] HTTP Request: POST https://token-plan-cn.xiaomimimo.com/v1/chat/completions "HTTP/1.1 429 Too Many Requests"
+2026-06-22 11:25:38,553 [WARNING] Key tp-cbe9w... 被429，冷却 24s
+2026-06-22 11:25:38,553 [INFO] 换 key 重试 (2/4 已用)
+2026-06-22 11:25:51,244 [INFO] HTTP Request: POST https://token-plan-cn.xiaomimimo.com/v1/chat/completions "HTTP/1.1 429 Too Many Requests"
+2026-06-22 11:25:51,245 [WARNING] Key tp-ch31h... 被429，冷却 163s
+2026-06-22 11:25:51,245 [INFO] 换 key 重试 (1/4 已用)
+2026-06-22 11:25:51,245 [ERROR] API最终失败: Error code: 429 - {'error': {'code': '429', 'message': 'Too many requests', 'type': 'limitation'}}
+2026-06-22 11:25:53,282 [ERROR] API最终失败: Request timed out.
+2026-06-22 11:25:54,166 [INFO] HTTP Request: POST https://token-plan-cn.xiaomimimo.com/v1/chat/completions "HTTP/1.1 429 Too Many Requests"
+2026-06-22 11:25:54,166 [WARNING] Key tp-ch31h... 被429，冷却 13s
+2026-06-22 11:25:54,166 [INFO] 换 key 重试 (1/4 已用)
+2026-06-22 11:25:55,004 [INFO] HTTP Request: POST https://token-plan-cn.xiaomimimo.com/v1/chat/completions "HTTP/1.1 429 Too Many Requests"
+2026-06-22 11:25:55,005 [WARNING] Key tp-cbe9w... 被429，冷却 25s
+2026-06-22 11:25:55,005 [INFO] 换 key 重试 (2/4 已用)
+2026-06-22 11:25:55,794 [INFO] HTTP Request: POST https://token-plan-cn.xiaomimimo.com/v1/chat/completions "HTTP/1.1 429 Too Many Requests"
+2026-06-22 11:25:55,795 [WARNING] Key tp-cwzeg... 被429，冷却 43s
+2026-06-22 11:25:55,795 [INFO] 换 key 重试 (3/4 已用)
+2026-06-22 11:26:16,180 [INFO] HTTP Request: POST https://token-plan-cn.xiaomimimo.com/v1/chat/completions "HTTP/1.1 200 OK"
+2026-06-22 11:26:18,012 [INFO] HTTP Request: POST https://token-plan-cn.xiaomimimo.com/v1/chat/completions "HTTP/1.1 429 Too Many Requests"
+2026-06-22 11:26:18,012 [WARNING] Key tp-cbe9w... 被429，冷却 24s
+2026-06-22 11:26:18,012 [INFO] 换 key 重试 (2/4 已用)
+2026-06-22 11:26:32,443 [INFO] HTTP Request: POST https://token-plan-cn.xiaomimimo.com/v1/chat/completions "HTTP/1.1 200 OK"
+2026-06-22 11:26:33,283 [INFO] HTTP Request: POST https://token-plan-cn.xiaomimimo.com/v1/chat/completions "HTTP/1.1 429 Too Many Requests"
+2026-06-22 11:26:33,284 [WARNING] Key tp-cbe9w... 被429，冷却 15s
+2026-06-22 11:26:33,284 [INFO] 换 key 重试 (1/4 已用)
+2026-06-22 11:26:34,087 [INFO] HTTP Request: POST https://token-plan-cn.xiaomimimo.com/v1/chat/completions "HTTP/1.1 429 Too Many Requests"
+2026-06-22 11:26:34,087 [WARNING] Key tp-cwzeg... 被429，冷却 24s
+2026-06-22 11:26:34,087 [INFO] 换 key 重试 (2/4 已用)
+2026-06-22 11:26:34,925 [INFO] HTTP Request: POST https://token-plan-cn.xiaomimimo.com/v1/chat/completions "HTTP/1.1 429 Too Many Requests"
+2026-06-22 11:26:34,925 [WARNING] Key tp-cazru... 被429，冷却 42s
+2026-06-22 11:26:34,926 [INFO] 换 key 重试 (3/4 已用)
+2026-06-22 11:26:44,153 [INFO] HTTP Request: POST https://token-plan-cn.xiaomimimo.com/v1/chat/completions "HTTP/1.1 200 OK"
+2026-06-22 11:26:58,806 [INFO] HTTP Request: POST https://token-plan-cn.xiaomimimo.com/v1/chat/completions "HTTP/1.1 200 OK"
+2026-06-22 11:26:59,807 [ERROR] API最终失败: Error code: 429 - {'error': {'code': '429', 'message': 'Too many requests', 'type': 'limitation'}}
+2026-06-22 11:26:59,808 [INFO] 进度: 150/500 | 成功: 26 | 缓存: 28 | Key统计: {'tp-ch31h...': {'success': 0, 'fail': 0, '429': 0}, 'tp-cbe9w...': {'success': 0, 'fail': 0, '429': 0}, 'tp-cwzeg...': {'success': 0, 'fail': 0, '429': 0}, 'tp-cazru...': {'success': 0, 'fail': 0, '429': 0}}
+2026-06-22 11:27:09,043 [INFO] HTTP Request: POST https://token-plan-cn.xiaomimimo.com/v1/chat/completions "HTTP/1.1 200 OK"
+2026-06-22 11:27:10,906 [INFO] HTTP Request: POST https://token-plan-cn.xiaomimimo.com/v1/chat/completions "HTTP/1.1 429 Too Many Requests"
+2026-06-22 11:27:10,906 [WARNING] Key tp-cazru... 被429，冷却 83s
+2026-06-22 11:27:10,906 [WARNING] 所有 key 都429，等待 43.0s 后重试 (4/5)
+2026-06-22 11:27:32,860 [INFO] HTTP Request: POST https://token-plan-cn.xiaomimimo.com/v1/chat/completions "HTTP/1.1 200 OK"
+2026-06-22 11:27:33,775 [INFO] HTTP Request: POST https://token-plan-cn.xiaomimimo.com/v1/chat/completions "HTTP/1.1 429 Too Many Requests"
+2026-06-22 11:27:33,776 [WARNING] Key tp-cazru... 被429，冷却 11s
+2026-06-22 11:27:33,776 [INFO] 换 key 重试 (1/4 已用)
+2026-06-22 11:27:43,322 [INFO] HTTP Request: POST https://token-plan-cn.xiaomimimo.com/v1/chat/completions "HTTP/1.1 200 OK"
+2026-06-22 11:27:45,223 [INFO] HTTP Request: POST https://token-plan-cn.xiaomimimo.com/v1/chat/completions "HTTP/1.1 429 Too Many Requests"
+2026-06-22 11:27:45,223 [WARNING] Key tp-cbe9w... 被429，冷却 23s
+2026-06-22 11:27:45,223 [INFO] 换 key 重试 (2/4 已用)
+2026-06-22 11:27:54,753 [INFO] HTTP Request: POST https://token-plan-cn.xiaomimimo.com/v1/chat/completions "HTTP/1.1 429 Too Many Requests"
+2026-06-22 11:27:54,753 [WARNING] Key tp-ch31h... 被429，冷却 160s
+2026-06-22 11:27:54,753 [INFO] 换 key 重试 (1/4 已用)
+2026-06-22 11:27:54,753 [ERROR] API最终失败: Error code: 429 - {'error': {'code': '429', 'message': 'Too many requests', 'type': 'limitation'}}
+2026-06-22 11:27:55,593 [INFO] HTTP Request: POST https://token-plan-cn.xiaomimimo.com/v1/chat/completions "HTTP/1.1 429 Too Many Requests"
+2026-06-22 11:27:55,594 [WARNING] Key tp-ch31h... 被429，冷却 13s
+2026-06-22 11:27:55,594 [INFO] 换 key 重试 (1/4 已用)
+2026-06-22 11:27:56,452 [INFO] HTTP Request: POST https://token-plan-cn.xiaomimimo.com/v1/chat/completions "HTTP/1.1 429 Too Many Requests"
+2026-06-22 11:27:56,452 [WARNING] Key tp-cbe9w... 被429，冷却 22s
+2026-06-22 11:27:56,452 [INFO] 换 key 重试 (2/4 已用)
+2026-06-22 11:28:11,795 [INFO] HTTP Request: POST https://token-plan-cn.xiaomimimo.com/v1/chat/completions "HTTP/1.1 200 OK"
