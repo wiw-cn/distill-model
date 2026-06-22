@@ -264,3 +264,11 @@
 2026-06-22 06:23:58,614 [WARNING] Key tp-cigoo... 被429，冷却 83s
 2026-06-22 06:23:58,614 [WARNING] 所有 key 都429，等待 42.8s 后重试 (4/5)
 2026-06-22 06:24:20,108 [INFO] HTTP Request: POST https://token-plan-cn.xiaomimimo.com/v1/chat/completions "HTTP/1.1 200 OK"
+2026-06-22 06:24:20,869 [INFO] HTTP Request: POST https://token-plan-cn.xiaomimimo.com/v1/chat/completions "HTTP/1.1 429 Too Many Requests"
+2026-06-22 06:24:20,869 [WARNING] Key tp-cigoo... 被429，冷却 14s
+2026-06-22 06:24:20,869 [INFO] 换 key 重试 (1/3 已用)
+2026-06-22 06:24:21,059 [INFO] Git 自动推送成功 (批次 8)
+2026-06-22 06:24:21,653 [INFO] HTTP Request: POST https://token-plan-cn.xiaomimimo.com/v1/chat/completions "HTTP/1.1 429 Too Many Requests"
+2026-06-22 06:24:21,654 [WARNING] Key tp-cdpqq... 被429，冷却 23s
+2026-06-22 06:24:21,654 [INFO] 换 key 重试 (2/3 已用)
+2026-06-22 06:24:35,234 [INFO] HTTP Request: POST https://token-plan-cn.xiaomimimo.com/v1/chat/completions "HTTP/1.1 200 OK"
