@@ -9236,3 +9236,8 @@
 2026-06-22 17:55:25,202 [ERROR] API最终失败: Error code: 401 - {'error': {'message': 'Invalid API Key', 'param': 'Please provide valid API Key', 'code': '401', 'type': 'invalid_key'}}
 2026-06-22 17:55:36,978 [INFO] HTTP Request: POST https://token-plan-cn.xiaomimimo.com/v1/chat/completions "HTTP/1.1 200 OK"
 2026-06-22 17:55:37,869 [INFO] HTTP Request: POST https://token-plan-cn.xiaomimimo.com/v1/chat/completions "HTTP/1.1 200 OK"
+2026-06-22 17:55:38,653 [INFO] HTTP Request: POST https://token-plan-cn.xiaomimimo.com/v1/chat/completions "HTTP/1.1 429 Too Many Requests"
+2026-06-22 17:55:38,654 [WARNING] Key tp-ch31h... 被429，冷却 13s
+2026-06-22 17:55:38,654 [INFO] 换 key 重试 (1/7 已用)
+2026-06-22 17:55:39,018 [INFO] Git 自动推送成功 (批次 128)
+2026-06-22 17:55:57,664 [INFO] HTTP Request: POST https://token-plan-cn.xiaomimimo.com/v1/chat/completions "HTTP/1.1 200 OK"
