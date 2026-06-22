@@ -6032,3 +6032,11 @@
 2026-06-22 13:42:30,363 [WARNING] Key tp-ch31h... 被429，冷却 81s
 2026-06-22 13:42:30,363 [INFO] 换 key 重试 (4/7 已用)
 2026-06-22 13:42:37,865 [INFO] HTTP Request: POST https://token-plan-cn.xiaomimimo.com/v1/chat/completions "HTTP/1.1 200 OK"
+2026-06-22 13:42:38,634 [INFO] HTTP Request: POST https://token-plan-cn.xiaomimimo.com/v1/chat/completions "HTTP/1.1 429 Too Many Requests"
+2026-06-22 13:42:38,635 [WARNING] Key tp-ch31h... 被429，冷却 13s
+2026-06-22 13:42:38,635 [INFO] 换 key 重试 (1/7 已用)
+2026-06-22 13:42:38,960 [INFO] Git 自动推送成功 (批次 9)
+2026-06-22 13:42:59,517 [INFO] HTTP Request: POST https://token-plan-cn.xiaomimimo.com/v1/chat/completions "HTTP/1.1 429 Too Many Requests"
+2026-06-22 13:42:59,517 [WARNING] Key tp-ch31h... 被429，冷却 85s
+2026-06-22 13:42:59,517 [INFO] 换 key 重试 (4/7 已用)
+2026-06-22 13:43:14,259 [INFO] HTTP Request: POST https://token-plan-cn.xiaomimimo.com/v1/chat/completions "HTTP/1.1 200 OK"
