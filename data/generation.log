@@ -6447,3 +6447,5 @@
 2026-06-22 14:13:53,931 [WARNING] Key tp-c5nyb... 被429，冷却 44s
 2026-06-22 14:13:53,931 [INFO] 换 key 重试 (3/7 已用)
 2026-06-22 14:14:00,465 [INFO] HTTP Request: POST https://token-plan-cn.xiaomimimo.com/v1/chat/completions "HTTP/1.1 200 OK"
+2026-06-22 14:14:01,733 [INFO] Git 自动推送成功 (批次 26)
+2026-06-22 14:14:05,662 [INFO] HTTP Request: POST https://token-plan-cn.xiaomimimo.com/v1/chat/completions "HTTP/1.1 200 OK"
