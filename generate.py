@@ -16,9 +16,13 @@ import random
 import time
 import logging
 import argparse
+import smtplib
+import ssl
 from datetime import datetime
 from typing import Optional
 from concurrent.futures import ThreadPoolExecutor, as_completed
+from email.mime.text import MIMEText
+from email.mime.multipart import MIMEMultipart
 import threading
 
 try:
@@ -37,6 +41,13 @@ WORKERS = int(os.environ.get("WORKERS", "5"))
 
 # 输出目录（GitHub Actions 中通常设为仓库目录）
 OUTPUT_DIR = os.environ.get("OUTPUT_DIR", "distill_output")
+
+# 邮件通知配置（可选）
+SMTP_HOST = os.environ.get("SMTP_HOST", "")
+SMTP_PORT = int(os.environ.get("SMTP_PORT", "587"))
+SMTP_USER = os.environ.get("SMTP_USER", "")
+SMTP_PASS = os.environ.get("SMTP_PASS", "")
+NOTIFY_EMAIL = os.environ.get("NOTIFY_EMAIL", "")  # 收件人邮箱
 
 # 日志配置
 os.makedirs(OUTPUT_DIR, exist_ok=True)
@@ -177,6 +188,13 @@ class ModelClient:
                 return None
             except Exception as e:
                 last_error = e
+                err_str = str(e).lower()
+                # 429 速率限制：指数退避等待
+                if "429" in err_str or "rate limit" in err_str or "too many requests" in err_str:
+                    wait = min(2 ** attempt * 5 + random.uniform(0, 3), 300)
+                    logger.warning(f"遇到429速率限制，等待 {wait:.1f}s 后重试 ({attempt + 1}/{self.max_retries})")
+                    time.sleep(wait)
+                    continue
                 wait = self.retry_delay * (attempt + 1) + random.uniform(0, 2)
                 logger.debug(f"API失败 ({attempt + 1}/{self.max_retries}): {e}, 等待{wait:.1f}s")
                 time.sleep(wait)
@@ -438,6 +456,28 @@ class DistillationPipeline:
                 f.write(json.dumps(record, ensure_ascii=False) + "\n")
 
 
+# ==================== 邮件通知 ====================
+def send_notification(subject: str, body: str):
+    """发送邮件通知（配置可选）"""
+    if not all([SMTP_HOST, SMTP_USER, SMTP_PASS, NOTIFY_EMAIL]):
+        logger.info("邮件通知未配置，跳过")
+        return
+    try:
+        msg = MIMEMultipart()
+        msg["From"] = SMTP_USER
+        msg["To"] = NOTIFY_EMAIL
+        msg["Subject"] = subject
+        msg.attach(MIMEText(body, "plain", "utf-8"))
+        context = ssl.create_default_context()
+        with smtplib.SMTP(SMTP_HOST, SMTP_PORT) as server:
+            server.starttls(context=context)
+            server.login(SMTP_USER, SMTP_PASS)
+            server.sendmail(SMTP_USER, NOTIFY_EMAIL, msg.as_string())
+        logger.info(f"邮件通知已发送至 {NOTIFY_EMAIL}")
+    except Exception as e:
+        logger.error(f"邮件发送失败: {e}")
+
+
 # ==================== 转换为训练格式 ====================
 def convert_to_training_format(input_file: str, output_file: str):
     training_data = []
@@ -505,9 +545,34 @@ def main():
     training_file = output_file.replace(".jsonl", "_training.json")
     convert_to_training_format(output_file, training_file)
 
+    # 发送完成通知
+    data_count = 0
+    try:
+        with open(output_file, "r", encoding="utf-8") as f:
+            data_count = sum(1 for _ in f if _.strip())
+    except Exception:
+        pass
+
+    notify_body = f"""蒸馏数据生成完成
+
+模型: {MODEL}
+生成数量: {data_count} 条
+原始数据: {output_file}
+训练格式: {training_file}
+输出目录: {os.path.abspath(OUTPUT_DIR)}
+
+文件说明:
+- *.jsonl          原始数据（每行一条JSON）
+- *_training.json  训练格式（标准多轮对话）
+- *_stats.json     生成统计
+- generation.log   运行日志
+"""
+    send_notification(f"[蒸馏数据] 生成完成 {data_count}条", notify_body)
+
     print(f"\n{'='*60}")
     print(f"原始数据: {output_file}")
     print(f"训练格式: {training_file}")
+    print(f"输出目录: {os.path.abspath(OUTPUT_DIR)}")
     print(f"{'='*60}")
 
 
