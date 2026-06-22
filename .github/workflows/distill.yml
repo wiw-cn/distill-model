@@ -28,7 +28,7 @@ jobs:
           COUNT: ${{ secrets.COUNT || '500' }}
           WORKERS: ${{ secrets.WORKERS || '5' }}
           OUTPUT_DIR: ${{ github.workspace }}/data
-        run: python distill_generate.py --concurrent
+        run: python generate.py --concurrent
 
       - name: Commit and push
         run: |
