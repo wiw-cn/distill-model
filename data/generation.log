@@ -649,3 +649,22 @@
 2026-06-22 07:41:59,561 [WARNING] Key tp-cbe9w... 被429，冷却 85s
 2026-06-22 07:41:59,561 [WARNING] 所有 key 都429，等待 41.6s 后重试 (4/5)
 2026-06-22 07:42:27,544 [INFO] HTTP Request: POST https://token-plan-cn.xiaomimimo.com/v1/chat/completions "HTTP/1.1 200 OK"
+2026-06-22 07:42:28,338 [INFO] HTTP Request: POST https://token-plan-cn.xiaomimimo.com/v1/chat/completions "HTTP/1.1 429 Too Many Requests"
+2026-06-22 07:42:28,338 [WARNING] Key tp-csems... 被429，冷却 12s
+2026-06-22 07:42:28,338 [INFO] 换 key 重试 (1/4 已用)
+2026-06-22 07:42:28,622 [INFO] Git 自动推送成功 (批次 6)
+2026-06-22 07:42:28,779 [INFO] HTTP Request: POST https://token-plan-cn.xiaomimimo.com/v1/chat/completions "HTTP/1.1 200 OK"
+2026-06-22 07:43:05,072 [INFO] HTTP Request: POST https://token-plan-cn.xiaomimimo.com/v1/chat/completions "HTTP/1.1 200 OK"
+2026-06-22 07:43:31,787 [INFO] HTTP Request: POST https://token-plan-cn.xiaomimimo.com/v1/chat/completions "HTTP/1.1 200 OK"
+2026-06-22 07:43:33,578 [INFO] HTTP Request: POST https://token-plan-cn.xiaomimimo.com/v1/chat/completions "HTTP/1.1 401 Unauthorized"
+2026-06-22 07:44:13,313 [INFO] HTTP Request: POST https://token-plan-cn.xiaomimimo.com/v1/chat/completions "HTTP/1.1 200 OK"
+2026-06-22 07:44:31,099 [INFO] HTTP Request: POST https://token-plan-cn.xiaomimimo.com/v1/chat/completions "HTTP/1.1 200 OK"
+2026-06-22 07:44:32,100 [ERROR] API最终失败: Error code: 429 - {'error': {'code': '429', 'message': 'Too many requests', 'type': 'limitation'}}
+2026-06-22 07:44:32,944 [INFO] HTTP Request: POST https://token-plan-cn.xiaomimimo.com/v1/chat/completions "HTTP/1.1 429 Too Many Requests"
+2026-06-22 07:44:32,944 [WARNING] Key tp-csems... 被429，冷却 12s
+2026-06-22 07:44:32,944 [INFO] 换 key 重试 (1/4 已用)
+2026-06-22 07:45:00,923 [INFO] HTTP Request: POST https://token-plan-cn.xiaomimimo.com/v1/chat/completions "HTTP/1.1 200 OK"
+2026-06-22 07:45:01,697 [INFO] HTTP Request: POST https://token-plan-cn.xiaomimimo.com/v1/chat/completions "HTTP/1.1 429 Too Many Requests"
+2026-06-22 07:45:01,697 [WARNING] Key tp-csems... 被429，冷却 11s
+2026-06-22 07:45:01,697 [INFO] 换 key 重试 (1/4 已用)
+2026-06-22 07:45:22,769 [INFO] HTTP Request: POST https://token-plan-cn.xiaomimimo.com/v1/chat/completions "HTTP/1.1 200 OK"
