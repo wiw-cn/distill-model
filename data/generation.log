@@ -3671,3 +3671,8 @@
 2026-06-22 11:33:14,238 [ERROR] API最终失败: Request timed out.
 2026-06-22 11:33:30,266 [INFO] HTTP Request: POST https://token-plan-cn.xiaomimimo.com/v1/chat/completions "HTTP/1.1 200 OK"
 2026-06-22 11:33:43,712 [INFO] HTTP Request: POST https://token-plan-cn.xiaomimimo.com/v1/chat/completions "HTTP/1.1 200 OK"
+2026-06-22 11:33:44,536 [INFO] HTTP Request: POST https://token-plan-cn.xiaomimimo.com/v1/chat/completions "HTTP/1.1 429 Too Many Requests"
+2026-06-22 11:33:44,537 [WARNING] Key tp-ch31h... 被429，冷却 14s
+2026-06-22 11:33:44,537 [INFO] 换 key 重试 (1/4 已用)
+2026-06-22 11:33:44,729 [INFO] Git 自动推送成功 (批次 28)
+2026-06-22 11:33:53,816 [INFO] HTTP Request: POST https://token-plan-cn.xiaomimimo.com/v1/chat/completions "HTTP/1.1 200 OK"
