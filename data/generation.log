@@ -10175,3 +10175,8 @@
 2026-06-22 23:05:22,980 [WARNING] Key tp-cb2ao... 被429，冷却 45s
 2026-06-22 23:05:22,981 [INFO] 换 key 重试 (3/6 已用)
 2026-06-22 23:05:27,758 [INFO] HTTP Request: POST https://token-plan-cn.xiaomimimo.com/v1/chat/completions "HTTP/1.1 200 OK"
+2026-06-22 23:05:28,962 [INFO] Git 自动推送成功 (批次 7)
+2026-06-22 23:05:36,211 [INFO] HTTP Request: POST https://token-plan-cn.xiaomimimo.com/v1/chat/completions "HTTP/1.1 200 OK"
+2026-06-22 23:05:55,158 [INFO] HTTP Request: POST https://token-plan-cn.xiaomimimo.com/v1/chat/completions "HTTP/1.1 200 OK"
+2026-06-22 23:06:12,618 [INFO] HTTP Request: POST https://token-plan-cn.xiaomimimo.com/v1/chat/completions "HTTP/1.1 200 OK"
+2026-06-22 23:06:38,468 [INFO] HTTP Request: POST https://token-plan-cn.xiaomimimo.com/v1/chat/completions "HTTP/1.1 200 OK"
