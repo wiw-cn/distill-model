@@ -3741,3 +3741,6 @@
 2026-06-22 11:41:51,103 [WARNING] Key tp-cwzeg... 被429，冷却 44s
 2026-06-22 11:41:51,103 [INFO] 换 key 重试 (3/4 已用)
 2026-06-22 11:41:55,899 [INFO] HTTP Request: POST https://token-plan-cn.xiaomimimo.com/v1/chat/completions "HTTP/1.1 200 OK"
+2026-06-22 11:41:56,925 [INFO] Git 自动推送成功 (批次 32)
+2026-06-22 11:42:09,367 [ERROR] API最终失败: Error code: 429 - {'error': {'code': '429', 'message': 'Too many requests', 'type': 'limitation'}}
+2026-06-22 11:42:14,005 [INFO] HTTP Request: POST https://token-plan-cn.xiaomimimo.com/v1/chat/completions "HTTP/1.1 200 OK"
