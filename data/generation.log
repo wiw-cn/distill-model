@@ -6650,3 +6650,11 @@
 2026-06-22 14:44:27,237 [ERROR] API最终失败: Request timed out.
 2026-06-22 14:45:18,091 [INFO] HTTP Request: POST https://token-plan-cn.xiaomimimo.com/v1/chat/completions "HTTP/1.1 200 OK"
 2026-06-22 14:45:34,417 [INFO] HTTP Request: POST https://token-plan-cn.xiaomimimo.com/v1/chat/completions "HTTP/1.1 200 OK"
+2026-06-22 14:45:35,548 [INFO] Git 自动推送成功 (批次 40)
+2026-06-22 14:45:50,118 [INFO] HTTP Request: POST https://token-plan-cn.xiaomimimo.com/v1/chat/completions "HTTP/1.1 200 OK"
+2026-06-22 14:46:13,489 [INFO] HTTP Request: POST https://token-plan-cn.xiaomimimo.com/v1/chat/completions "HTTP/1.1 200 OK"
+2026-06-22 14:46:14,262 [INFO] HTTP Request: POST https://token-plan-cn.xiaomimimo.com/v1/chat/completions "HTTP/1.1 429 Too Many Requests"
+2026-06-22 14:46:14,263 [WARNING] Key tp-cwzeg... 被429，冷却 12s
+2026-06-22 14:46:14,263 [INFO] 换 key 重试 (1/7 已用)
+2026-06-22 14:46:25,889 [INFO] HTTP Request: POST https://token-plan-cn.xiaomimimo.com/v1/chat/completions "HTTP/1.1 200 OK"
+2026-06-22 14:47:04,205 [INFO] HTTP Request: POST https://token-plan-cn.xiaomimimo.com/v1/chat/completions "HTTP/1.1 200 OK"
