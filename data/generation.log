@@ -6673,3 +6673,22 @@
 2026-06-22 14:48:40,458 [ERROR] API最终失败: Request timed out.
 2026-06-22 14:49:11,254 [INFO] HTTP Request: POST https://token-plan-cn.xiaomimimo.com/v1/chat/completions "HTTP/1.1 200 OK"
 2026-06-22 14:49:14,244 [INFO] HTTP Request: POST https://token-plan-cn.xiaomimimo.com/v1/chat/completions "HTTP/1.1 200 OK"
+2026-06-22 14:49:15,451 [INFO] Git 自动推送成功 (批次 42)
+2026-06-22 14:49:29,358 [INFO] HTTP Request: POST https://token-plan-cn.xiaomimimo.com/v1/chat/completions "HTTP/1.1 200 OK"
+2026-06-22 14:49:30,164 [INFO] HTTP Request: POST https://token-plan-cn.xiaomimimo.com/v1/chat/completions "HTTP/1.1 429 Too Many Requests"
+2026-06-22 14:49:30,165 [WARNING] Key tp-cbwup... 被429，冷却 10s
+2026-06-22 14:49:30,165 [INFO] 换 key 重试 (1/7 已用)
+2026-06-22 14:49:30,959 [INFO] HTTP Request: POST https://token-plan-cn.xiaomimimo.com/v1/chat/completions "HTTP/1.1 429 Too Many Requests"
+2026-06-22 14:49:30,960 [WARNING] Key tp-c5nyb... 被429，冷却 21s
+2026-06-22 14:49:30,960 [INFO] 换 key 重试 (2/7 已用)
+2026-06-22 14:49:31,048 [INFO] HTTP Request: POST https://token-plan-cn.xiaomimimo.com/v1/chat/completions "HTTP/1.1 200 OK"
+2026-06-22 14:49:31,764 [INFO] HTTP Request: POST https://token-plan-cn.xiaomimimo.com/v1/chat/completions "HTTP/1.1 429 Too Many Requests"
+2026-06-22 14:49:31,765 [WARNING] Key tp-c8q1z... 被429，冷却 44s
+2026-06-22 14:49:31,765 [INFO] 换 key 重试 (3/7 已用)
+2026-06-22 14:49:55,347 [INFO] HTTP Request: POST https://token-plan-cn.xiaomimimo.com/v1/chat/completions "HTTP/1.1 429 Too Many Requests"
+2026-06-22 14:49:55,347 [WARNING] Key tp-cbwup... 被429，冷却 80s
+2026-06-22 14:49:55,348 [INFO] 换 key 重试 (4/7 已用)
+2026-06-22 14:49:56,162 [INFO] HTTP Request: POST https://token-plan-cn.xiaomimimo.com/v1/chat/completions "HTTP/1.1 429 Too Many Requests"
+2026-06-22 14:49:56,163 [WARNING] Key tp-c5nyb... 被429，冷却 162s
+2026-06-22 14:49:56,163 [INFO] 换 key 重试 (5/7 已用)
+2026-06-22 14:49:56,163 [ERROR] API最终失败: Error code: 429 - {'error': {'code': '429', 'message': 'Too many requests', 'type': 'limitation'}}
