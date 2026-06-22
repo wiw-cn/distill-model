@@ -8,6 +8,7 @@
 
 特性：
 - 多 API Key 轮询（避免单 key 速率限制）
+- 问题生成后缓存，答案 429 时只重试答案（不丢弃问题）
 - 生成一条存储一条（即时持久化，进程崩溃不丢数据）
 - 429 智能退避重试
 - 邮件通知（可选）
@@ -59,6 +60,10 @@ SMTP_USER = os.environ.get("SMTP_USER", "")
 SMTP_PASS = os.environ.get("SMTP_PASS", "")
 NOTIFY_EMAIL = os.environ.get("NOTIFY_EMAIL", "")
 
+# Git 自动推送配置（GitHub Actions 中启用）
+GIT_PUSH_INTERVAL = int(os.environ.get("GIT_PUSH_INTERVAL", "0"))  # 0=不推送，N=每N条推送一次
+GITHUB_TOKEN = os.environ.get("GITHUB_TOKEN", "")
+
 # 日志配置
 os.makedirs(OUTPUT_DIR, exist_ok=True)
 logging.basicConfig(
@@ -70,6 +75,36 @@ logging.basicConfig(
     ]
 )
 logger = logging.getLogger(__name__)
+
+
+# ==================== Git 自动推送 ====================
+GIT_PUSH_COUNTER = threading.Lock()
+GIT_PUSH_COUNT = 0
+
+
+def git_push_on_interval(output_dir: str):
+    """每 GIT_PUSH_INTERVAL 条数据推送一次，cancel 也不丢数据"""
+    global GIT_PUSH_COUNT
+    if GIT_PUSH_INTERVAL <= 0:
+        return
+    with GIT_PUSH_COUNTER:
+        GIT_PUSH_COUNT += 1
+        if GIT_PUSH_COUNT % GIT_PUSH_INTERVAL != 0:
+            return
+    try:
+        repo_url = f"https://x-access-token:{GITHUB_TOKEN}@github.com/{os.environ.get('GITHUB_REPOSITORY', '')}.git" if GITHUB_TOKEN else ""
+        # 设置远程地址（仅在首次）
+        if repo_url:
+            os.system(f"git remote set-url origin {repo_url} 2>/dev/null")
+        os.system("git config user.name 'github-actions[bot]' 2>/dev/null")
+        os.system("git config user.email 'github-actions[bot]@users.noreply.github.com' 2>/dev/null")
+        ret = os.system(f"git add {output_dir}/ && git commit -m 'auto: distill data batch {GIT_PUSH_COUNT}' --allow-empty && git push")
+        if ret == 0:
+            logger.info(f"Git 自动推送成功 (批次 {GIT_PUSH_COUNT})")
+        else:
+            logger.warning(f"Git 推送返回码: {ret} (可能无变更)")
+    except Exception as e:
+        logger.error(f"Git 推送失败: {e}")
 
 
 # ==================== 领域定义 ====================
@@ -170,21 +205,18 @@ class KeyRotator:
         self.model = model
         self._index = 0
         self._lock = threading.Lock()
-        self._cooldown: dict = {}  # key -> 解除冷却时间
+        self._cooldown: dict = {}
         self._key_stats = {k: {"success": 0, "fail": 0, "429": 0} for k in keys}
 
     def get_next_key(self) -> str:
-        """获取下一个可用的 key"""
         with self._lock:
             now = time.time()
-            # 先尝试找不在冷却期的 key
             for _ in range(len(self.keys)):
                 key = self.keys[self._index % len(self.keys)]
                 self._index += 1
                 cooldown_end = self._cooldown.get(key, 0)
                 if now >= cooldown_end:
                     return key
-            # 所有 key 都在冷却，找最快解除的
             key = min(self.keys, key=lambda k: self._cooldown.get(k, 0))
             wait = self._cooldown.get(key, 0) - now
             if wait > 0:
@@ -197,7 +229,6 @@ class KeyRotator:
             self._key_stats[key]["success"] += 1
 
     def mark_429(self, key: str, cooldown_seconds: float = 60):
-        """标记 key 被 429，进入冷却期"""
         with self._lock:
             self._key_stats[key]["429"] += 1
             self._cooldown[key] = time.time() + cooldown_seconds
@@ -253,15 +284,12 @@ class ModelClient:
             except Exception as e:
                 last_error = e
                 err_str = str(e).lower()
-                # 429 速率限制：标记 key 冷却，指数退避
                 if "429" in err_str or "rate limit" in err_str or "too many requests" in err_str or "usage limit" in err_str:
                     cooldown = min(2 ** attempt * 10 + random.uniform(0, 5), 300)
                     self.key_rotator.mark_429(key, cooldown)
-                    # 如果还有未尝试的 key，立即换 key
                     if len(used_keys) < len(self.key_rotator.keys):
                         logger.info(f"换 key 重试 ({len(used_keys)}/{len(self.key_rotator.keys)} 已用)")
                         continue
-                    # 所有 key 都 429 了，等待
                     wait = min(2 ** attempt * 5 + random.uniform(0, 3), 300)
                     logger.warning(f"所有 key 都429，等待 {wait:.1f}s 后重试 ({attempt + 1}/{self.max_retries})")
                     time.sleep(wait)
@@ -366,10 +394,55 @@ Step 5: 深入探讨 — 深层含义、推广、反例
                 "answer": processed,
                 "question_type": question_type,
                 "domain": domain,
-                "model": self.key_rotator.model if hasattr(self, 'key_rotator') else "unknown",
                 "timestamp": datetime.now().isoformat()
             }
         return None
+
+
+# ==================== 问题缓存管理器 ====================
+class QuestionCache:
+    """管理已生成但未回答的问题缓存，支持断点续答"""
+
+    def __init__(self, cache_file: str):
+        self.cache_file = cache_file
+        self._lock = threading.Lock()
+        self._ensure_file()
+
+    def _ensure_file(self):
+        if not os.path.exists(self.cache_file):
+            with open(self.cache_file, "w", encoding="utf-8") as f:
+                pass
+
+    def add(self, question_data: dict):
+        """添加新问题到缓存"""
+        with self._lock:
+            with open(self.cache_file, "a", encoding="utf-8") as f:
+                f.write(json.dumps(question_data, ensure_ascii=False) + "\n")
+
+    def pop_one(self) -> Optional[dict]:
+        """取出一条未回答的问题，并从缓存中删除"""
+        with self._lock:
+            lines = []
+            with open(self.cache_file, "r", encoding="utf-8") as f:
+                lines = [l for l in f if l.strip()]
+            if not lines:
+                return None
+            # 取第一条
+            record = json.loads(lines[0])
+            # 写回剩余
+            with open(self.cache_file, "w", encoding="utf-8") as f:
+                for line in lines[1:]:
+                    f.write(line)
+            return record
+
+    def count(self) -> int:
+        with self._lock:
+            count = 0
+            with open(self.cache_file, "r", encoding="utf-8") as f:
+                for line in f:
+                    if line.strip():
+                        count += 1
+            return count
 
 
 # ==================== 数据生成流水线 ====================
@@ -390,21 +463,32 @@ class DistillationPipeline:
         }
         self._stats_lock = threading.Lock()
 
-    def generate_one(self, domain: str, question_type: str) -> Optional[dict]:
+    def generate_one(self, domain: str, question_type: str, question_cache: QuestionCache) -> Optional[dict]:
+        """生成一条完整记录，问题缓存后回答失败可重试"""
         with self._stats_lock:
             self.stats["total"] += 1
+
+        # 1. 生成问题
         question_data = self.question_generator.generate_question(domain, question_type)
         if not question_data:
             with self._stats_lock:
                 self.stats["failed_generation"] += 1
             logger.warning(f"问题生成失败: {domain}, {question_type}")
             return None
+
+        # 2. 缓存问题（即使回答失败，问题也不会丢失）
+        question_cache.add(question_data)
+
+        # 3. 生成回答
         answer_data = self.answer_generator.generate_answer(question_data)
         if not answer_data:
-            with self._stats_lock:
-                self.stats["failed_answer"] += 1
-            logger.warning(f"回答生成失败: {domain}, {question_type}")
+            # 回答失败，问题仍在缓存中，稍后重试
+            logger.warning(f"回答生成失败，问题已缓存，稍后重试: {domain}, {question_type}")
             return None
+
+        # 4. 回答成功，从缓存中移除
+        question_cache.pop_one()
+
         record = {
             "id": f"distill_{datetime.now().strftime('%Y%m%d_%H%M%S')}_{self.stats['total']:04d}",
             "question": question_data["question"],
@@ -424,29 +508,79 @@ class DistillationPipeline:
             self.stats["by_type"][question_type] += 1
         return record
 
-    def generate_batch(self, total_count: int, output_file: str, batch_size: int = 10) -> str:
-        """串行模式：生成一条，立即存储一条"""
+    def retry_cached_questions(self, question_cache: QuestionCache, output_file: str, max_retries: int = 3):
+        """重试缓存中未回答的问题"""
+        for attempt in range(max_retries):
+            cached = question_cache.count()
+            if cached == 0:
+                break
+            logger.info(f"第 {attempt + 1} 轮重试缓存问题: {cached} 条")
+            retry_count = 0
+            while True:
+                qdata = question_cache.pop_one()
+                if qdata is None:
+                    break
+                answer_data = self.answer_generator.generate_answer(qdata)
+                if answer_data:
+                    record = {
+                        "id": f"distill_{datetime.now().strftime('%Y%m%d_%H%M%S')}_retry{retry_count:04d}",
+                        "question": qdata["question"],
+                        "question_type": qdata["question_type"],
+                        "domain": qdata["domain"],
+                        "domain_name": DOMAINS[qdata["domain"]]["name"],
+                        "subtopic": qdata.get("subtopic", ""),
+                        "difficulty": qdata.get("difficulty", "expert"),
+                        "has_hidden_error": qdata.get("has_hidden_error", False),
+                        "answer": answer_data["answer"],
+                        "model": self.model,
+                        "timestamp": datetime.now().isoformat()
+                    }
+                    with open(output_file, "a", encoding="utf-8") as f:
+                        f.write(json.dumps(record, ensure_ascii=False) + "\n")
+                    git_push_on_interval(OUTPUT_DIR)
+                    with self._stats_lock:
+                        self.stats["success"] += 1
+                        self.stats["by_domain"][qdata["domain"]] += 1
+                        self.stats["by_type"][qdata["question_type"]] += 1
+                    retry_count += 1
+                else:
+                    # 仍然失败，放回缓存末尾
+                    question_cache.add(qdata)
+                    break  # 避免无限循环，等下一轮
+            logger.info(f"重试完成: {retry_count} 条成功，剩余缓存: {question_cache.count()} 条")
+            if question_cache.count() == 0:
+                break
+            time.sleep(10)  # 等待一会儿再重试
+
+    def generate_batch(self, total_count: int, output_file: str, cache_file: str, batch_size: int = 10) -> str:
+        """串行模式：生成问题缓存，回答失败可重试"""
         logger.info(f"开始串行生成 {total_count} 条，模型: {self.model}")
         existing_count = self._count_existing(output_file)
+        question_cache = QuestionCache(cache_file)
         domains = list(DOMAINS.keys())
+
         for i in range(existing_count, total_count):
             domain = domains[i % len(domains)]
             question_type = QUESTION_TYPES[i % len(QUESTION_TYPES)]
-            record = self.generate_one(domain, question_type)
+            record = self.generate_one(domain, question_type, question_cache)
             if record:
-                # 生成一条，立即追加存储一条
                 with open(output_file, "a", encoding="utf-8") as f:
                     f.write(json.dumps(record, ensure_ascii=False) + "\n")
+                git_push_on_interval(OUTPUT_DIR)
             if (i + 1) % batch_size == 0:
-                logger.info(f"进度: {i + 1}/{total_count} | 成功: {self.stats['success']} | Key统计: {self.key_rotator.get_stats()}")
+                logger.info(f"进度: {i + 1}/{total_count} | 成功: {self.stats['success']} | 缓存: {question_cache.count()} | Key统计: {self.key_rotator.get_stats()}")
             time.sleep(2)
+
+        # 主流程结束后，重试缓存中的问题
+        self.retry_cached_questions(question_cache, output_file)
         self._save_stats(output_file)
         return output_file
 
-    def generate_batch_concurrent(self, total_count: int, output_file: str, batch_size: int = 10, max_workers: int = 5) -> str:
-        """并发模式：每个 worker 独立 client，生成一条立即存储一条"""
+    def generate_batch_concurrent(self, total_count: int, output_file: str, cache_file: str, batch_size: int = 10, max_workers: int = 5) -> str:
+        """并发模式：问题缓存，回答失败可重试"""
         logger.info(f"开始并发 {total_count} 条 (workers={max_workers})，模型: {self.model}")
         existing_count = self._count_existing(output_file)
+        question_cache = QuestionCache(cache_file)
         domains = list(DOMAINS.keys())
         completed = existing_count
         success_count = 0
@@ -455,19 +589,31 @@ class DistillationPipeline:
         def worker_task(idx):
             if idx < existing_count:
                 return None
-            # 每个 worker 独立创建 key rotator 和 client
             worker_rotator = KeyRotator(self.keys, self.base_url, self.model)
             worker_client = ModelClient(worker_rotator)
             qgen = QuestionGenerator(worker_client)
             agen = AnswerGenerator(worker_client)
             domain = domains[idx % len(domains)]
             qtype = QUESTION_TYPES[idx % len(QUESTION_TYPES)]
+
+            # 生成问题
             qdata = qgen.generate_question(domain, qtype)
             if not qdata:
-                return {"error": "question_failed", "domain": domain, "type": qtype}
+                return {"error": "question_failed"}
+
+            # 缓存问题
+            with file_lock:
+                question_cache.add(qdata)
+
+            # 生成回答
             adata = agen.generate_answer(qdata)
             if not adata:
-                return {"error": "answer_failed", "domain": domain, "type": qtype}
+                return {"error": "answer_failed", "cached": True}
+
+            # 回答成功，从缓存移除
+            with file_lock:
+                question_cache.pop_one()
+
             return {
                 "id": f"distill_{datetime.now().strftime('%Y%m%d_%H%M%S')}_{idx:04d}",
                 "question": qdata["question"],
@@ -490,29 +636,28 @@ class DistillationPipeline:
                 try:
                     result = future.result()
                     if result and "error" not in result:
-                        # 生成一条，立即追加存储一条
                         with file_lock:
                             with open(output_file, "a", encoding="utf-8") as f:
                                 f.write(json.dumps(result, ensure_ascii=False) + "\n")
+                            git_push_on_interval(OUTPUT_DIR)
                             success_count += 1
-                    elif result and "error" in result:
+                    elif result and result.get("error") == "question_failed":
                         with self._stats_lock:
-                            if result["error"] == "question_failed":
-                                self.stats["failed_generation"] += 1
-                            else:
-                                self.stats["failed_answer"] += 1
+                            self.stats["failed_generation"] += 1
                 except Exception as e:
                     logger.error(f"任务异常 (idx={idx}): {e}")
                 completed += 1
                 if completed % batch_size == 0:
-                    logger.info(f"进度: {completed}/{total_count} | 成功: {success_count} | Key统计: {self.key_rotator.get_stats()}")
+                    logger.info(f"进度: {completed}/{total_count} | 成功: {success_count} | 缓存: {question_cache.count()} | Key统计: {self.key_rotator.get_stats()}")
+
+        # 主流程结束后，重试缓存中的问题
         self.stats["success"] = success_count
+        self.retry_cached_questions(question_cache, output_file)
         self._save_stats(output_file)
-        logger.info(f"完成！共 {success_count} 条新数据（总计 {existing_count + success_count} 条）")
+        logger.info(f"完成！共 {self.stats['success']} 条成功，缓存剩余: {question_cache.count()} 条")
         return output_file
 
     def _count_existing(self, output_file: str) -> int:
-        """统计已有记录数"""
         count = 0
         if os.path.exists(output_file):
             with open(output_file, "r", encoding="utf-8") as f:
@@ -523,7 +668,6 @@ class DistillationPipeline:
         return count
 
     def _save_stats(self, output_file: str):
-        """保存统计文件"""
         stats_file = output_file.replace(".jsonl", "_stats.json")
         with open(stats_file, "w", encoding="utf-8") as f:
             json.dump(self.stats, f, ensure_ascii=False, indent=2)
@@ -607,13 +751,14 @@ def main():
     workers = args.workers or WORKERS
     timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
     output_file = args.output or os.path.join(OUTPUT_DIR, f"distill_data_{timestamp}.jsonl")
+    cache_file = output_file.replace(".jsonl", "_question_cache.jsonl")
 
     pipeline = DistillationPipeline(API_KEYS, BASE_URL, MODEL)
 
     if args.concurrent:
-        pipeline.generate_batch_concurrent(count, output_file, max_workers=workers)
+        pipeline.generate_batch_concurrent(count, output_file, cache_file, max_workers=workers)
     else:
-        pipeline.generate_batch(count, output_file)
+        pipeline.generate_batch(count, output_file, cache_file)
 
     training_file = output_file.replace(".jsonl", "_training.json")
     convert_to_training_format(output_file, training_file)
@@ -629,10 +774,11 @@ def main():
 输出目录: {os.path.abspath(OUTPUT_DIR)}
 
 文件说明:
-- *.jsonl          原始数据（每行一条JSON）
-- *_training.json  训练格式（标准多轮对话）
-- *_stats.json     生成统计
-- generation.log   运行日志
+- *.jsonl              原始数据（每行一条JSON）
+- *_training.json      训练格式（标准多轮对话）
+- *_stats.json         生成统计
+- *_question_cache.jsonl  问题缓存（未回答的问题）
+- generation.log       运行日志
 """
     send_notification(f"[蒸馏数据] 生成完成 {data_count}条", notify_body)
 
