@@ -3796,3 +3796,10 @@
 2026-06-22 11:49:18,860 [INFO] 换 key 重试 (1/4 已用)
 2026-06-22 11:49:59,779 [INFO] HTTP Request: POST https://token-plan-cn.xiaomimimo.com/v1/chat/completions "HTTP/1.1 200 OK"
 2026-06-22 11:50:10,765 [INFO] HTTP Request: POST https://token-plan-cn.xiaomimimo.com/v1/chat/completions "HTTP/1.1 200 OK"
+2026-06-22 11:50:11,830 [INFO] Git 自动推送成功 (批次 36)
+2026-06-22 11:50:36,245 [INFO] HTTP Request: POST https://token-plan-cn.xiaomimimo.com/v1/chat/completions "HTTP/1.1 200 OK"
+2026-06-22 11:50:37,593 [INFO] HTTP Request: POST https://token-plan-cn.xiaomimimo.com/v1/chat/completions "HTTP/1.1 200 OK"
+2026-06-22 11:50:39,433 [INFO] HTTP Request: POST https://token-plan-cn.xiaomimimo.com/v1/chat/completions "HTTP/1.1 429 Too Many Requests"
+2026-06-22 11:50:39,434 [WARNING] Key tp-cazru... 被429，冷却 83s
+2026-06-22 11:50:39,434 [WARNING] 所有 key 都429，等待 41.3s 后重试 (4/5)
+2026-06-22 11:50:57,081 [INFO] HTTP Request: POST https://token-plan-cn.xiaomimimo.com/v1/chat/completions "HTTP/1.1 200 OK"
