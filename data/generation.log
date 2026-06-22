@@ -9950,3 +9950,5 @@
 2026-06-22 18:51:00,574 [WARNING] Key tp-ch31h... 被429，冷却 12s
 2026-06-22 18:51:00,574 [INFO] 换 key 重试 (1/7 已用)
 2026-06-22 18:51:07,099 [INFO] HTTP Request: POST https://token-plan-cn.xiaomimimo.com/v1/chat/completions "HTTP/1.1 200 OK"
+2026-06-22 18:51:08,363 [INFO] Git 自动推送成功 (批次 160)
+2026-06-22 18:51:24,425 [INFO] HTTP Request: POST https://token-plan-cn.xiaomimimo.com/v1/chat/completions "HTTP/1.1 200 OK"
