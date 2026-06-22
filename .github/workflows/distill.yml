@@ -1,0 +1,95 @@
+name: 每日蒸馏数据生成
+
+on:
+  schedule:
+    # UTC 时间每天 2:00（北京时间 10:00），可自行调整
+    - cron: '0 2 * * *'
+  workflow_dispatch:   # 允许手动触发测试
+
+jobs:
+  generate-and-merge:
+    runs-on: ubuntu-latest
+    timeout-minutes: 360   # 最长6小时，足够生成500条
+
+    steps:
+      - name: 检出代码
+        uses: actions/checkout@v4
+
+      - name: 设置 Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
+
+      - name: 安装依赖
+        run: |
+          python -m pip install --upgrade pip
+          pip install openai
+
+      - name: 创建输出目录
+        run: mkdir -p output
+
+      # ----- 1. 下载已有的累计数据（用于追加） -----
+      - name: 下载历史累计数据
+        uses: actions/download-artifact@v4
+        with:
+          name: distill-cumulative
+          path: cumulative
+        continue-on-error: true   # 第一次运行没有这个 artifact 会报错，忽略即可
+
+      # ----- 2. 运行生成脚本 -----
+      - name: 生成今日数据
+        env:
+          API_KEY: ${{ secrets.API_KEY }}
+          BASE_URL: ${{ secrets.BASE_URL }}
+          GENERATOR_MODEL: ${{ secrets.GENERATOR_MODEL }}
+          ANSWERER_MODEL: ${{ secrets.ANSWERER_MODEL }}
+          OUTPUT_DIR: ./output
+        run: |
+          python generate.py \
+            --count 500 \
+            --output output/distill_$(date +%Y%m%d).jsonl
+
+      - name: 显示生成结果
+        run: |
+          echo "当日生成文件："
+          ls -lh output/distill_*.jsonl
+          echo "条数："
+          wc -l output/distill_*.jsonl
+
+      # ----- 3. 上传当日数据作为独立 artifact（保留90天） -----
+      - name: 上传当日数据
+        uses: actions/upload-artifact@v4
+        with:
+          name: distill-${{ github.run_id }}-${{ github.run_attempt }}
+          path: output/distill_*.jsonl
+          retention-days: 90
+
+      # ----- 4. 合并到累计数据集 -----
+      - name: 合并到累计文件
+        run: |
+          # 确保 cumulative 目录存在且有一个基础文件
+          mkdir -p cumulative
+          touch cumulative/distill_cumulative.jsonl
+          # 追加当日数据
+          cat output/distill_*.jsonl >> cumulative/distill_cumulative.jsonl
+          echo "累计总条数：$(wc -l < cumulative/distill_cumulative.jsonl)"
+
+      # ----- 5. 上传更新后的累计数据集（覆盖同名 artifact） -----
+      - name: 上传累计数据
+        uses: actions/upload-artifact@v4
+        with:
+          name: distill-cumulative
+          path: cumulative/distill_cumulative.jsonl
+          retention-days: 90
+          
+      - name: 转换为训练格式（全量）
+        run: |
+          python generate.py --convert-only cumulative/distill_cumulative.jsonl
+          # 生成的文件为 cumulative/distill_cumulative_training.json
+
+      - name: 上传训练格式累计数据
+        uses: actions/upload-artifact@v4
+        with:
+          name: distill-cumulative-training
+          path: cumulative/distill_cumulative_training.json
+          retention-days: 90
