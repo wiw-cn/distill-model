@@ -8374,3 +8374,13 @@
 2026-06-22 16:56:44,720 [INFO] HTTP Request: POST https://token-plan-cn.xiaomimimo.com/v1/chat/completions "HTTP/1.1 200 OK"
 2026-06-22 16:57:02,188 [INFO] HTTP Request: POST https://token-plan-cn.xiaomimimo.com/v1/chat/completions "HTTP/1.1 200 OK"
 2026-06-22 16:57:02,782 [INFO] HTTP Request: POST https://token-plan-cn.xiaomimimo.com/v1/chat/completions "HTTP/1.1 200 OK"
+2026-06-22 16:57:03,948 [INFO] Git 自动推送成功 (批次 98)
+2026-06-22 16:57:03,969 [INFO] HTTP Request: POST https://token-plan-cn.xiaomimimo.com/v1/chat/completions "HTTP/1.1 429 Too Many Requests"
+2026-06-22 16:57:03,970 [WARNING] Key tp-cwzeg... 被429，冷却 43s
+2026-06-22 16:57:03,970 [INFO] 换 key 重试 (3/7 已用)
+2026-06-22 16:57:04,774 [INFO] HTTP Request: POST https://token-plan-cn.xiaomimimo.com/v1/chat/completions "HTTP/1.1 429 Too Many Requests"
+2026-06-22 16:57:04,775 [WARNING] Key tp-cazru... 被429，冷却 84s
+2026-06-22 16:57:04,775 [INFO] 换 key 重试 (4/7 已用)
+2026-06-22 16:57:05,542 [INFO] HTTP Request: POST https://token-plan-cn.xiaomimimo.com/v1/chat/completions "HTTP/1.1 401 Unauthorized"
+2026-06-22 16:57:14,641 [INFO] HTTP Request: POST https://token-plan-cn.xiaomimimo.com/v1/chat/completions "HTTP/1.1 200 OK"
+2026-06-22 16:57:14,911 [INFO] HTTP Request: POST https://token-plan-cn.xiaomimimo.com/v1/chat/completions "HTTP/1.1 200 OK"
