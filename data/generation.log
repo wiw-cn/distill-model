@@ -3744,3 +3744,20 @@
 2026-06-22 11:41:56,925 [INFO] Git 自动推送成功 (批次 32)
 2026-06-22 11:42:09,367 [ERROR] API最终失败: Error code: 429 - {'error': {'code': '429', 'message': 'Too many requests', 'type': 'limitation'}}
 2026-06-22 11:42:14,005 [INFO] HTTP Request: POST https://token-plan-cn.xiaomimimo.com/v1/chat/completions "HTTP/1.1 200 OK"
+2026-06-22 11:42:15,078 [INFO] Git 自动推送成功 (批次 33)
+2026-06-22 11:42:43,586 [INFO] HTTP Request: POST https://token-plan-cn.xiaomimimo.com/v1/chat/completions "HTTP/1.1 200 OK"
+2026-06-22 11:42:54,617 [INFO] HTTP Request: POST https://token-plan-cn.xiaomimimo.com/v1/chat/completions "HTTP/1.1 200 OK"
+2026-06-22 11:43:00,487 [INFO] HTTP Request: POST https://token-plan-cn.xiaomimimo.com/v1/chat/completions "HTTP/1.1 200 OK"
+2026-06-22 11:43:37,566 [INFO] HTTP Request: POST https://token-plan-cn.xiaomimimo.com/v1/chat/completions "HTTP/1.1 200 OK"
+2026-06-22 11:44:32,560 [INFO] HTTP Request: POST https://token-plan-cn.xiaomimimo.com/v1/chat/completions "HTTP/1.1 200 OK"
+2026-06-22 11:44:32,660 [INFO] HTTP Request: POST https://token-plan-cn.xiaomimimo.com/v1/chat/completions "HTTP/1.1 200 OK"
+2026-06-22 11:44:34,477 [INFO] HTTP Request: POST https://token-plan-cn.xiaomimimo.com/v1/chat/completions "HTTP/1.1 429 Too Many Requests"
+2026-06-22 11:44:34,478 [WARNING] Key tp-cwzeg... 被429，冷却 42s
+2026-06-22 11:44:34,478 [INFO] 换 key 重试 (3/4 已用)
+2026-06-22 11:44:34,523 [INFO] HTTP Request: POST https://token-plan-cn.xiaomimimo.com/v1/chat/completions "HTTP/1.1 429 Too Many Requests"
+2026-06-22 11:44:34,523 [WARNING] Key tp-cwzeg... 被429，冷却 45s
+2026-06-22 11:44:34,523 [INFO] 换 key 重试 (3/4 已用)
+2026-06-22 11:44:35,362 [INFO] HTTP Request: POST https://token-plan-cn.xiaomimimo.com/v1/chat/completions "HTTP/1.1 429 Too Many Requests"
+2026-06-22 11:44:35,363 [WARNING] Key tp-cazru... 被429，冷却 84s
+2026-06-22 11:44:35,363 [WARNING] 所有 key 都429，等待 42.3s 后重试 (4/5)
+2026-06-22 11:44:36,747 [INFO] HTTP Request: POST https://token-plan-cn.xiaomimimo.com/v1/chat/completions "HTTP/1.1 200 OK"
