@@ -1,0 +1,1 @@
+{"question": "在一个逻辑系统中，给定以下前提：\n1. 如果x是偶数，则y是奇数；否则，y是偶数。\n2. 如果y是奇数，则z是偶数；否则，z是奇数。\n3. 如果z是偶数，则w大于v；否则，w小于v。\n4. w等于10。\n5. v等于5。\n6. x等于8。\n7. 如果w大于v，则u等于t乘以2；否则，u等于t除以2。\n8. t等于3。\n9. 如果u等于t乘以2，则s等于r加1；否则，s等于r减1。\n10. r等于4。\n结论：s等于5。\n请验证该结论是否正确。", "question_type": "true_proposition", "domain": "logic", "subtopic": "多前提逻辑推理链", "difficulty": "expert", "has_hidden_error": false}
