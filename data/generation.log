@@ -7168,3 +7168,44 @@
 2026-06-22 15:31:47,955 [WARNING] Key tp-cazru... 被429，冷却 84s
 2026-06-22 15:31:47,955 [INFO] 换 key 重试 (4/7 已用)
 2026-06-22 15:32:09,962 [INFO] HTTP Request: POST https://token-plan-cn.xiaomimimo.com/v1/chat/completions "HTTP/1.1 200 OK"
+2026-06-22 15:32:11,192 [INFO] Git 自动推送成功 (批次 57)
+2026-06-22 15:32:33,677 [INFO] HTTP Request: POST https://token-plan-cn.xiaomimimo.com/v1/chat/completions "HTTP/1.1 200 OK"
+2026-06-22 15:32:35,399 [INFO] HTTP Request: POST https://token-plan-cn.xiaomimimo.com/v1/chat/completions "HTTP/1.1 429 Too Many Requests"
+2026-06-22 15:32:35,400 [WARNING] Key tp-cazru... 被429，冷却 84s
+2026-06-22 15:32:35,400 [INFO] 换 key 重试 (4/7 已用)
+2026-06-22 15:33:05,317 [INFO] HTTP Request: POST https://token-plan-cn.xiaomimimo.com/v1/chat/completions "HTTP/1.1 200 OK"
+2026-06-22 15:33:06,905 [INFO] HTTP Request: POST https://token-plan-cn.xiaomimimo.com/v1/chat/completions "HTTP/1.1 200 OK"
+2026-06-22 15:33:08,376 [INFO] HTTP Request: POST https://token-plan-cn.xiaomimimo.com/v1/chat/completions "HTTP/1.1 429 Too Many Requests"
+2026-06-22 15:33:08,377 [WARNING] Key tp-cbe9w... 被429，冷却 80s
+2026-06-22 15:33:08,377 [INFO] 换 key 重试 (4/7 已用)
+2026-06-22 15:33:08,639 [INFO] HTTP Request: POST https://token-plan-cn.xiaomimimo.com/v1/chat/completions "HTTP/1.1 429 Too Many Requests"
+2026-06-22 15:33:08,640 [WARNING] Key tp-cbe9w... 被429，冷却 23s
+2026-06-22 15:33:08,640 [INFO] 换 key 重试 (2/7 已用)
+2026-06-22 15:33:09,384 [INFO] HTTP Request: POST https://token-plan-cn.xiaomimimo.com/v1/chat/completions "HTTP/1.1 429 Too Many Requests"
+2026-06-22 15:33:09,385 [WARNING] Key tp-cwzeg... 被429，冷却 44s
+2026-06-22 15:33:09,385 [INFO] 换 key 重试 (3/7 已用)
+2026-06-22 15:33:10,173 [INFO] HTTP Request: POST https://token-plan-cn.xiaomimimo.com/v1/chat/completions "HTTP/1.1 429 Too Many Requests"
+2026-06-22 15:33:10,174 [WARNING] Key tp-cazru... 被429，冷却 82s
+2026-06-22 15:33:10,174 [INFO] 换 key 重试 (4/7 已用)
+2026-06-22 15:33:24,046 [INFO] HTTP Request: POST https://token-plan-cn.xiaomimimo.com/v1/chat/completions "HTTP/1.1 200 OK"
+2026-06-22 15:33:25,047 [ERROR] API最终失败: Error code: 429 - {'error': {'code': '429', 'message': 'quota exhausted', 'type': 'limitation'}}
+2026-06-22 15:34:18,070 [INFO] HTTP Request: POST https://token-plan-cn.xiaomimimo.com/v1/chat/completions "HTTP/1.1 200 OK"
+2026-06-22 15:34:19,887 [INFO] HTTP Request: POST https://token-plan-cn.xiaomimimo.com/v1/chat/completions "HTTP/1.1 429 Too Many Requests"
+2026-06-22 15:34:19,887 [WARNING] Key tp-cbe9w... 被429，冷却 23s
+2026-06-22 15:34:19,888 [INFO] 换 key 重试 (2/7 已用)
+2026-06-22 15:34:20,677 [INFO] HTTP Request: POST https://token-plan-cn.xiaomimimo.com/v1/chat/completions "HTTP/1.1 429 Too Many Requests"
+2026-06-22 15:34:20,677 [WARNING] Key tp-cwzeg... 被429，冷却 40s
+2026-06-22 15:34:20,677 [INFO] 换 key 重试 (3/7 已用)
+2026-06-22 15:34:21,421 [INFO] HTTP Request: POST https://token-plan-cn.xiaomimimo.com/v1/chat/completions "HTTP/1.1 429 Too Many Requests"
+2026-06-22 15:34:21,422 [WARNING] Key tp-cazru... 被429，冷却 80s
+2026-06-22 15:34:21,422 [INFO] 换 key 重试 (4/7 已用)
+2026-06-22 15:34:35,088 [INFO] HTTP Request: POST https://token-plan-cn.xiaomimimo.com/v1/chat/completions "HTTP/1.1 200 OK"
+2026-06-22 15:34:52,985 [ERROR] API最终失败: Request timed out.
+2026-06-22 15:35:25,954 [ERROR] API最终失败: Request timed out.
+2026-06-22 15:35:51,254 [INFO] HTTP Request: POST https://token-plan-cn.xiaomimimo.com/v1/chat/completions "HTTP/1.1 200 OK"
+2026-06-22 15:35:52,255 [ERROR] API最终失败: Error code: 429 - {'error': {'code': '429', 'message': 'quota exhausted', 'type': 'limitation'}}
+2026-06-22 15:35:54,799 [INFO] HTTP Request: POST https://token-plan-cn.xiaomimimo.com/v1/chat/completions "HTTP/1.1 200 OK"
+2026-06-22 15:35:56,600 [INFO] HTTP Request: POST https://token-plan-cn.xiaomimimo.com/v1/chat/completions "HTTP/1.1 429 Too Many Requests"
+2026-06-22 15:35:56,601 [WARNING] Key tp-cbe9w... 被429，冷却 25s
+2026-06-22 15:35:56,601 [INFO] 换 key 重试 (2/7 已用)
+2026-06-22 15:36:15,219 [INFO] HTTP Request: POST https://token-plan-cn.xiaomimimo.com/v1/chat/completions "HTTP/1.1 200 OK"
