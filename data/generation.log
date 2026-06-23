@@ -11054,3 +11054,22 @@
 2026-06-23 01:26:59,400 [INFO] 换 key 重试 (1/6 已用)
 2026-06-23 01:26:59,900 [INFO] Git 自动推送成功 (批次 106)
 2026-06-23 01:27:16,393 [INFO] HTTP Request: POST https://token-plan-cn.xiaomimimo.com/v1/chat/completions "HTTP/1.1 200 OK"
+2026-06-23 01:27:17,183 [INFO] HTTP Request: POST https://token-plan-cn.xiaomimimo.com/v1/chat/completions "HTTP/1.1 429 Too Many Requests"
+2026-06-23 01:27:17,183 [WARNING] Key tp-cjcyt... 被429，冷却 10s
+2026-06-23 01:27:17,184 [INFO] 换 key 重试 (1/6 已用)
+2026-06-23 01:27:17,661 [INFO] Git 自动推送成功 (批次 107)
+2026-06-23 01:27:18,710 [INFO] HTTP Request: POST https://token-plan-cn.xiaomimimo.com/v1/chat/completions "HTTP/1.1 429 Too Many Requests"
+2026-06-23 01:27:18,711 [WARNING] Key tp-cb2ao... 被429，冷却 84s
+2026-06-23 01:27:18,711 [INFO] 换 key 重试 (4/6 已用)
+2026-06-23 01:27:19,396 [INFO] HTTP Request: POST https://token-plan-cn.xiaomimimo.com/v1/chat/completions "HTTP/1.1 429 Too Many Requests"
+2026-06-23 01:27:19,396 [WARNING] Key tp-cjcyt... 被429，冷却 165s
+2026-06-23 01:27:19,396 [INFO] 换 key 重试 (5/6 已用)
+2026-06-23 01:27:19,397 [ERROR] API最终失败: Error code: 429 - {'error': {'code': '429', 'message': 'Too many requests', 'type': 'limitation'}}
+2026-06-23 01:27:20,073 [INFO] HTTP Request: POST https://token-plan-cn.xiaomimimo.com/v1/chat/completions "HTTP/1.1 429 Too Many Requests"
+2026-06-23 01:27:20,074 [WARNING] Key tp-cjcyt... 被429，冷却 11s
+2026-06-23 01:27:20,074 [INFO] 换 key 重试 (1/6 已用)
+2026-06-23 01:27:20,205 [INFO] HTTP Request: POST https://token-plan-cn.xiaomimimo.com/v1/chat/completions "HTTP/1.1 200 OK"
+2026-06-23 01:27:45,314 [INFO] HTTP Request: POST https://token-plan-cn.xiaomimimo.com/v1/chat/completions "HTTP/1.1 200 OK"
+2026-06-23 01:28:05,893 [INFO] HTTP Request: POST https://token-plan-cn.xiaomimimo.com/v1/chat/completions "HTTP/1.1 200 OK"
+2026-06-23 01:28:10,261 [INFO] HTTP Request: POST https://token-plan-cn.xiaomimimo.com/v1/chat/completions "HTTP/1.1 200 OK"
+2026-06-23 01:28:50,121 [INFO] HTTP Request: POST https://token-plan-cn.xiaomimimo.com/v1/chat/completions "HTTP/1.1 200 OK"
