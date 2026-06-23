@@ -11049,3 +11049,8 @@
 2026-06-23 01:26:12,559 [INFO] HTTP Request: POST https://token-plan-cn.xiaomimimo.com/v1/chat/completions "HTTP/1.1 200 OK"
 2026-06-23 01:26:14,299 [INFO] HTTP Request: POST https://token-plan-cn.xiaomimimo.com/v1/chat/completions "HTTP/1.1 200 OK"
 2026-06-23 01:26:58,623 [INFO] HTTP Request: POST https://token-plan-cn.xiaomimimo.com/v1/chat/completions "HTTP/1.1 200 OK"
+2026-06-23 01:26:59,399 [INFO] HTTP Request: POST https://token-plan-cn.xiaomimimo.com/v1/chat/completions "HTTP/1.1 429 Too Many Requests"
+2026-06-23 01:26:59,400 [WARNING] Key tp-cjcyt... 被429，冷却 11s
+2026-06-23 01:26:59,400 [INFO] 换 key 重试 (1/6 已用)
+2026-06-23 01:26:59,900 [INFO] Git 自动推送成功 (批次 106)
+2026-06-23 01:27:16,393 [INFO] HTTP Request: POST https://token-plan-cn.xiaomimimo.com/v1/chat/completions "HTTP/1.1 200 OK"
