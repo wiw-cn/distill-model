@@ -26598,3 +26598,11 @@
 2026-06-23 21:39:07,200 [INFO] 重试完成: 8 条成功，剩余缓存: 51 条
 2026-06-23 21:39:17,201 [INFO] 第 2 轮重试缓存问题: 51 条
 2026-06-23 21:40:02,279 [INFO] HTTP Request: POST https://token-plan-cn.xiaomimimo.com/v1/chat/completions "HTTP/1.1 200 OK"
+2026-06-23 21:40:03,600 [INFO] Git 自动推送成功 (批次 135)
+2026-06-23 21:40:04,397 [INFO] HTTP Request: POST https://token-plan-cn.xiaomimimo.com/v1/chat/completions "HTTP/1.1 429 Too Many Requests"
+2026-06-23 21:40:04,398 [WARNING] Key tp-cygq7... 被429，冷却 12s
+2026-06-23 21:40:04,398 [INFO] 换 key 重试 (1/14 已用)
+2026-06-23 21:40:04,926 [INFO] HTTP Request: POST https://token-plan-cn.xiaomimimo.com/v1/chat/completions "HTTP/1.1 429 Too Many Requests"
+2026-06-23 21:40:04,927 [WARNING] Key tp-ck8qz... 被429，冷却 24s
+2026-06-23 21:40:04,927 [INFO] 换 key 重试 (2/14 已用)
+2026-06-23 21:41:09,499 [INFO] HTTP Request: POST https://token-plan-cn.xiaomimimo.com/v1/chat/completions "HTTP/1.1 200 OK"
