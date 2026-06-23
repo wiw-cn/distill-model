@@ -26641,3 +26641,11 @@
 2026-06-23 21:51:34,895 [INFO] HTTP Request: POST https://token-plan-cn.xiaomimimo.com/v1/chat/completions "HTTP/1.1 200 OK"
 2026-06-23 21:51:36,306 [INFO] Git 自动推送成功 (批次 144)
 2026-06-23 21:53:02,994 [INFO] HTTP Request: POST https://token-plan-cn.xiaomimimo.com/v1/chat/completions "HTTP/1.1 200 OK"
+2026-06-23 21:53:04,363 [INFO] Git 自动推送成功 (批次 145)
+2026-06-23 21:54:58,698 [INFO] HTTP Request: POST https://token-plan-cn.xiaomimimo.com/v1/chat/completions "HTTP/1.1 200 OK"
+2026-06-23 21:54:58,699 [WARNING] 回答可能被截断，用更大预算重试
+2026-06-23 21:54:59,478 [INFO] HTTP Request: POST https://token-plan-cn.xiaomimimo.com/v1/chat/completions "HTTP/1.1 401 Unauthorized"
+2026-06-23 21:57:11,616 [INFO] HTTP Request: POST https://token-plan-cn.xiaomimimo.com/v1/chat/completions "HTTP/1.1 429 Too Many Requests"
+2026-06-23 21:57:11,616 [WARNING] Key tp-co6v9... 被429，冷却 41s
+2026-06-23 21:57:11,616 [INFO] 换 key 重试 (3/14 已用)
+2026-06-23 21:58:53,595 [INFO] HTTP Request: POST https://token-plan-cn.xiaomimimo.com/v1/chat/completions "HTTP/1.1 200 OK"
