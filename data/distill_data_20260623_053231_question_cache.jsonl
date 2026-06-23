@@ -1,1 +1,1 @@
-{"question": "设G是一个有限群，其阶为120。假设G有一个正规子群H，使得H同构于交错群A_5，且商群G/H是循环群。证明G是可解群。", "question_type": "false_proposition", "domain": "math", "subtopic": "抽象代数中的群论与环论证明", "difficulty": "expert", "has_hidden_error": true}
+{"question": "给定以下命题逻辑关系：1. A → (B ∧ C)；2. B ↔ D；3. C → E；4. D → F；5. E ↔ ¬F；6. F → G；7. ¬G。请验证命题“在以上条件下，A 必然为假”是否正确，并提供至少5步的详细推理过程。", "question_type": "true_proposition", "domain": "logic", "subtopic": "命题逻辑中的蕴含与等价关系", "difficulty": "expert", "has_hidden_error": false}
