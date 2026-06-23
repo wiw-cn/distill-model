@@ -13032,3 +13032,6 @@
 2026-06-23 04:30:53,044 [WARNING] Key tp-co6v9... 被429，冷却 42s
 2026-06-23 04:30:53,044 [INFO] 换 key 重试 (3/6 已用)
 2026-06-23 04:31:21,510 [INFO] HTTP Request: POST https://token-plan-cn.xiaomimimo.com/v1/chat/completions "HTTP/1.1 200 OK"
+2026-06-23 04:31:22,762 [INFO] Git 自动推送成功 (批次 181)
+2026-06-23 04:31:22,762 [INFO] 进度: 300/500 | 成功: 181 | 缓存: 74 | Key统计: {'tp-cjcyt...': {'success': 0, 'fail': 0, '429': 0}, 'tp-co6v9...': {'success': 0, 'fail': 0, '429': 0}, 'tp-c8q1z...': {'success': 0, 'fail': 0, '429': 0}, 'tp-cbe9w...': {'success': 0, 'fail': 0, '429': 0}, 'tp-cwzeg...': {'success': 0, 'fail': 0, '429': 0}, 'tp-cb2ao...': {'success': 0, 'fail': 0, '429': 0}}
+2026-06-23 04:31:34,663 [INFO] HTTP Request: POST https://token-plan-cn.xiaomimimo.com/v1/chat/completions "HTTP/1.1 200 OK"
