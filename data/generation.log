@@ -26757,3 +26757,5 @@
 2026-06-23 22:30:36,267 [WARNING] Key tp-ck8qz... 被429，冷却 23s
 2026-06-23 22:30:36,267 [INFO] 换 key 重试 (2/14 已用)
 2026-06-23 22:31:44,276 [INFO] HTTP Request: POST https://token-plan-cn.xiaomimimo.com/v1/chat/completions "HTTP/1.1 200 OK"
+2026-06-23 22:31:45,628 [INFO] Git 自动推送成功 (批次 165)
+2026-06-23 22:33:24,702 [INFO] HTTP Request: POST https://token-plan-cn.xiaomimimo.com/v1/chat/completions "HTTP/1.1 200 OK"
