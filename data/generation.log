@@ -25201,3 +25201,5 @@
 2026-06-23 21:00:34,147 [INFO] 换 key 重试 (5/14 已用)
 2026-06-23 21:00:34,147 [ERROR] API最终失败: Error code: 429 - {'error': {'code': '429', 'message': 'quota exhausted', 'type': 'limitation'}}
 2026-06-23 21:00:45,077 [INFO] HTTP Request: POST https://token-plan-cn.xiaomimimo.com/v1/chat/completions "HTTP/1.1 200 OK"
+2026-06-23 21:00:46,497 [INFO] Git 自动推送成功 (批次 112)
+2026-06-23 21:00:49,743 [INFO] HTTP Request: POST https://token-plan-cn.xiaomimimo.com/v1/chat/completions "HTTP/1.1 200 OK"
