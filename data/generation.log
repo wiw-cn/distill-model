@@ -13418,3 +13418,22 @@
 2026-06-23 05:39:02,706 [WARNING] Key tp-co6v9... 被429，冷却 21s
 2026-06-23 05:39:02,706 [INFO] 换 key 重试 (2/14 已用)
 2026-06-23 05:39:18,025 [INFO] HTTP Request: POST https://token-plan-cn.xiaomimimo.com/v1/chat/completions "HTTP/1.1 200 OK"
+2026-06-23 05:39:19,092 [INFO] Git 自动推送成功 (批次 3)
+2026-06-23 05:39:33,218 [INFO] HTTP Request: POST https://token-plan-cn.xiaomimimo.com/v1/chat/completions "HTTP/1.1 200 OK"
+2026-06-23 05:39:34,149 [INFO] HTTP Request: POST https://token-plan-cn.xiaomimimo.com/v1/chat/completions "HTTP/1.1 429 Too Many Requests"
+2026-06-23 05:39:34,150 [WARNING] Key tp-cbe9w... 被429，冷却 10s
+2026-06-23 05:39:34,150 [INFO] 换 key 重试 (1/14 已用)
+2026-06-23 05:39:49,657 [INFO] HTTP Request: POST https://token-plan-cn.xiaomimimo.com/v1/chat/completions "HTTP/1.1 200 OK"
+2026-06-23 05:39:51,729 [INFO] HTTP Request: POST https://token-plan-cn.xiaomimimo.com/v1/chat/completions "HTTP/1.1 429 Too Many Requests"
+2026-06-23 05:39:51,730 [WARNING] Key tp-cbe9w... 被429，冷却 82s
+2026-06-23 05:39:51,730 [INFO] 换 key 重试 (4/14 已用)
+2026-06-23 05:40:05,395 [INFO] HTTP Request: POST https://token-plan-cn.xiaomimimo.com/v1/chat/completions "HTTP/1.1 200 OK"
+2026-06-23 05:40:07,358 [INFO] HTTP Request: POST https://token-plan-cn.xiaomimimo.com/v1/chat/completions "HTTP/1.1 429 Too Many Requests"
+2026-06-23 05:40:07,359 [WARNING] Key tp-co6v9... 被429，冷却 23s
+2026-06-23 05:40:07,359 [INFO] 换 key 重试 (2/14 已用)
+2026-06-23 05:40:38,480 [INFO] HTTP Request: POST https://token-plan-cn.xiaomimimo.com/v1/chat/completions "HTTP/1.1 200 OK"
+2026-06-23 05:40:40,385 [INFO] HTTP Request: POST https://token-plan-cn.xiaomimimo.com/v1/chat/completions "HTTP/1.1 429 Too Many Requests"
+2026-06-23 05:40:40,385 [WARNING] Key tp-cbe9w... 被429，冷却 84s
+2026-06-23 05:40:40,385 [INFO] 换 key 重试 (4/14 已用)
+2026-06-23 05:40:59,462 [INFO] HTTP Request: POST https://token-plan-cn.xiaomimimo.com/v1/chat/completions "HTTP/1.1 200 OK"
+2026-06-23 05:40:59,852 [INFO] HTTP Request: POST https://token-plan-cn.xiaomimimo.com/v1/chat/completions "HTTP/1.1 200 OK"
