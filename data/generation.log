@@ -22917,3 +22917,5 @@
 2026-06-23 19:45:50,278 [WARNING] Key tp-co6v9... 被429，冷却 14s
 2026-06-23 19:45:50,278 [INFO] 换 key 重试 (1/14 已用)
 2026-06-23 19:45:54,412 [INFO] HTTP Request: POST https://token-plan-cn.xiaomimimo.com/v1/chat/completions "HTTP/1.1 200 OK"
+2026-06-23 19:45:55,777 [INFO] Git 自动推送成功 (批次 58)
+2026-06-23 19:45:58,891 [INFO] HTTP Request: POST https://token-plan-cn.xiaomimimo.com/v1/chat/completions "HTTP/1.1 200 OK"
