@@ -10633,3 +10633,19 @@
 2026-06-23 00:23:54,972 [WARNING] Key tp-cjcyt... 被429，冷却 15s
 2026-06-23 00:23:54,972 [INFO] 换 key 重试 (1/6 已用)
 2026-06-23 00:24:06,254 [INFO] HTTP Request: POST https://token-plan-cn.xiaomimimo.com/v1/chat/completions "HTTP/1.1 200 OK"
+2026-06-23 00:24:06,966 [INFO] HTTP Request: POST https://token-plan-cn.xiaomimimo.com/v1/chat/completions "HTTP/1.1 429 Too Many Requests"
+2026-06-23 00:24:06,966 [WARNING] Key tp-cjcyt... 被429，冷却 15s
+2026-06-23 00:24:06,966 [INFO] 换 key 重试 (1/6 已用)
+2026-06-23 00:24:07,479 [INFO] Git 自动推送成功 (批次 63)
+2026-06-23 00:24:33,604 [INFO] HTTP Request: POST https://token-plan-cn.xiaomimimo.com/v1/chat/completions "HTTP/1.1 200 OK"
+2026-06-23 00:24:38,219 [INFO] HTTP Request: POST https://token-plan-cn.xiaomimimo.com/v1/chat/completions "HTTP/1.1 200 OK"
+2026-06-23 00:24:43,493 [INFO] HTTP Request: POST https://token-plan-cn.xiaomimimo.com/v1/chat/completions "HTTP/1.1 200 OK"
+2026-06-23 00:25:13,449 [INFO] HTTP Request: POST https://token-plan-cn.xiaomimimo.com/v1/chat/completions "HTTP/1.1 429 Too Many Requests"
+2026-06-23 00:25:13,450 [WARNING] Key tp-cwzeg... 被429，冷却 164s
+2026-06-23 00:25:13,450 [INFO] 换 key 重试 (5/6 已用)
+2026-06-23 00:25:13,450 [ERROR] API最终失败: Error code: 429 - {'error': {'code': '429', 'message': 'Too many requests', 'type': 'limitation'}}
+2026-06-23 00:25:14,165 [INFO] HTTP Request: POST https://token-plan-cn.xiaomimimo.com/v1/chat/completions "HTTP/1.1 429 Too Many Requests"
+2026-06-23 00:25:14,165 [WARNING] Key tp-cjcyt... 被429，冷却 12s
+2026-06-23 00:25:14,165 [INFO] 换 key 重试 (1/6 已用)
+2026-06-23 00:25:33,493 [INFO] HTTP Request: POST https://token-plan-cn.xiaomimimo.com/v1/chat/completions "HTTP/1.1 200 OK"
+2026-06-23 00:25:50,388 [INFO] HTTP Request: POST https://token-plan-cn.xiaomimimo.com/v1/chat/completions "HTTP/1.1 200 OK"
