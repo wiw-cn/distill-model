@@ -10973,3 +10973,8 @@
 2026-06-23 01:17:25,480 [WARNING] Key tp-cjcyt... 被429，冷却 13s
 2026-06-23 01:17:25,480 [INFO] 换 key 重试 (1/6 已用)
 2026-06-23 01:18:04,973 [INFO] HTTP Request: POST https://token-plan-cn.xiaomimimo.com/v1/chat/completions "HTTP/1.1 200 OK"
+2026-06-23 01:18:05,697 [INFO] HTTP Request: POST https://token-plan-cn.xiaomimimo.com/v1/chat/completions "HTTP/1.1 429 Too Many Requests"
+2026-06-23 01:18:05,698 [WARNING] Key tp-cjcyt... 被429，冷却 11s
+2026-06-23 01:18:05,698 [INFO] 换 key 重试 (1/6 已用)
+2026-06-23 01:18:06,179 [INFO] Git 自动推送成功 (批次 101)
+2026-06-23 01:18:13,443 [INFO] HTTP Request: POST https://token-plan-cn.xiaomimimo.com/v1/chat/completions "HTTP/1.1 200 OK"

@@ -1,4 +1,3 @@
-{"question": "{\"question\": \"在一个逻辑推理系统中", "question_type": "true_proposition", "domain": "logic", "subtopic": "逻辑悖论（如说谎者悖论、罗素悖论）", "difficulty": "expert", "has_hidden_error": false}
 {"question": "设 R 是一个有限环，其阶为 p^3，其中 p 是一个奇素数。假设 R 的加法群同构于 (Z/pZ)^3，并且对于任意 a, b ∈ R，满足 (ab)^p = a^p b^p。证明 R 是交换环。", "question_type": "false_proposition", "domain": "math", "subtopic": "抽象代数中的群论与环论证明", "difficulty": "expert", "has_hidden_error": true}
 {"question": "{\"question\": \"在编译原理的语法分析与类型推断中，考虑以下复杂场景：给定", "question_type": "flawed_proposition", "domain": "code", "subtopic": "编译原理中的语法分析与类型推断", "difficulty": "expert", "has_hidden_error": true}
 {"question": "设a、b、c是正整数，满足以下条件：(1) a + b + c = 15；(2) a、b、c互不相同；(3) a < b < c；(4) a是偶数。定义命题P：b是质数；命题Q：c是3的倍数；命题R：a + c > 10。考虑复合条件命题：如果（P且Q）或R，则b + c是奇数。请判断这个命题在给定条件下是否为真，并详细说明推理过程，要求推理步骤不少于5步，且需涵盖所有可能情况。", "question_type": "true_proposition", "domain": "logic", "subtopic": "条件命题的真值判断", "difficulty": "expert", "has_hidden_error": false}
