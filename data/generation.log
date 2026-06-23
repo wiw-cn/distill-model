@@ -12494,3 +12494,5 @@
 2026-06-23 03:50:14,273 [WARNING] Key tp-cb2ao... 被429，冷却 13s
 2026-06-23 03:50:14,273 [INFO] 换 key 重试 (1/6 已用)
 2026-06-23 03:50:29,062 [INFO] HTTP Request: POST https://token-plan-cn.xiaomimimo.com/v1/chat/completions "HTTP/1.1 200 OK"
+2026-06-23 03:50:30,369 [INFO] Git 自动推送成功 (批次 159)
+2026-06-23 03:50:45,148 [INFO] HTTP Request: POST https://token-plan-cn.xiaomimimo.com/v1/chat/completions "HTTP/1.1 200 OK"
