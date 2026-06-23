@@ -10691,3 +10691,10 @@
 2026-06-23 00:30:31,933 [INFO] Git 自动推送成功 (批次 68)
 2026-06-23 00:30:47,768 [INFO] HTTP Request: POST https://token-plan-cn.xiaomimimo.com/v1/chat/completions "HTTP/1.1 200 OK"
 2026-06-23 00:31:08,990 [INFO] HTTP Request: POST https://token-plan-cn.xiaomimimo.com/v1/chat/completions "HTTP/1.1 200 OK"
+2026-06-23 00:31:10,213 [INFO] Git 自动推送成功 (批次 69)
+2026-06-23 00:31:13,258 [INFO] HTTP Request: POST https://token-plan-cn.xiaomimimo.com/v1/chat/completions "HTTP/1.1 200 OK"
+2026-06-23 00:31:23,367 [INFO] HTTP Request: POST https://token-plan-cn.xiaomimimo.com/v1/chat/completions "HTTP/1.1 429 Too Many Requests"
+2026-06-23 00:31:23,368 [WARNING] Key tp-cb2ao... 被429，冷却 22s
+2026-06-23 00:31:23,368 [INFO] 换 key 重试 (2/6 已用)
+2026-06-23 00:31:52,708 [INFO] HTTP Request: POST https://token-plan-cn.xiaomimimo.com/v1/chat/completions "HTTP/1.1 200 OK"
+2026-06-23 00:32:08,798 [INFO] HTTP Request: POST https://token-plan-cn.xiaomimimo.com/v1/chat/completions "HTTP/1.1 200 OK"
