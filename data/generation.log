@@ -14098,3 +14098,5 @@
 2026-06-23 06:44:56,955 [WARNING] Key tp-cbe9w... 被429，冷却 83s
 2026-06-23 06:44:56,955 [INFO] 换 key 重试 (4/14 已用)
 2026-06-23 06:45:19,464 [INFO] HTTP Request: POST https://token-plan-cn.xiaomimimo.com/v1/chat/completions "HTTP/1.1 200 OK"
+2026-06-23 06:45:20,480 [INFO] Git 自动推送成功 (批次 30)
+2026-06-23 06:45:32,202 [INFO] HTTP Request: POST https://token-plan-cn.xiaomimimo.com/v1/chat/completions "HTTP/1.1 200 OK"
