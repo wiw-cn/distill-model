@@ -13614,3 +13614,6 @@
 2026-06-23 05:57:18,664 [WARNING] Key tp-cbe9w... 被429，冷却 11s
 2026-06-23 05:57:18,664 [INFO] 换 key 重试 (1/14 已用)
 2026-06-23 05:58:06,454 [INFO] HTTP Request: POST https://token-plan-cn.xiaomimimo.com/v1/chat/completions "HTTP/1.1 200 OK"
+2026-06-23 05:58:07,233 [ERROR] API最终失败: Request timed out.
+2026-06-23 05:58:07,450 [INFO] Git 自动推送成功 (批次 15)
+2026-06-23 05:58:35,950 [INFO] HTTP Request: POST https://token-plan-cn.xiaomimimo.com/v1/chat/completions "HTTP/1.1 200 OK"
