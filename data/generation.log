@@ -28294,3 +28294,9 @@
 2026-06-27 18:13:28,676 [INFO] HTTP Request: POST https://api.stepfun.com/step_plan/v1/chat/completions "HTTP/1.1 200 OK"
 2026-06-27 18:13:29,299 [INFO] HTTP Request: POST https://api.stepfun.com/step_plan/v1/chat/completions "HTTP/1.1 200 OK"
 2026-06-27 18:13:30,551 [INFO] Git 自动推送成功 (批次 73)
+2026-06-27 18:13:31,739 [INFO] Git 自动推送成功 (批次 74)
+2026-06-27 18:13:31,739 [INFO] 进度: 80/500 | 成功: 74 | 缓存: 8 | Key统计: {'ZCGGo2yU...': {'success': 0, 'fail': 0, '429': 0}}
+2026-06-27 18:13:44,599 [INFO] HTTP Request: POST https://api.stepfun.com/step_plan/v1/chat/completions "HTTP/1.1 200 OK"
+2026-06-27 18:13:44,629 [INFO] HTTP Request: POST https://api.stepfun.com/step_plan/v1/chat/completions "HTTP/1.1 200 OK"
+2026-06-27 18:13:45,501 [INFO] HTTP Request: POST https://api.stepfun.com/step_plan/v1/chat/completions "HTTP/1.1 200 OK"
+2026-06-27 18:13:56,274 [INFO] HTTP Request: POST https://api.stepfun.com/step_plan/v1/chat/completions "HTTP/1.1 200 OK"
