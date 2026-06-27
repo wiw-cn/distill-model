@@ -2,7 +2,9 @@ name: Generate Distillation Data
 
 on:
   schedule:
-    - cron: '0 16 * * *'
+    - cron: '0 16 * * *'   # 北京时间 00:00
+    - cron: '0 0 * * *'    # 北京时间 08:00
+    - cron: '0 8 * * *'    # 北京时间 16:00
   workflow_dispatch:
 
 permissions:
