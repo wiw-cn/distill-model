@@ -39130,3 +39130,14 @@
 2026-06-30 00:00:17,203 [INFO] HTTP Request: POST https://api.stepfun.com/step_plan/v1/chat/completions "HTTP/1.1 200 OK"
 2026-06-30 00:00:19,023 [INFO] HTTP Request: POST https://api.stepfun.com/step_plan/v1/chat/completions "HTTP/1.1 200 OK"
 2026-06-30 00:00:19,350 [INFO] Git 自动推送成功 (批次 388)
+2026-06-30 00:00:21,148 [INFO] Git 自动推送成功 (批次 389)
+2026-06-30 00:00:27,368 [INFO] HTTP Request: POST https://api.stepfun.com/step_plan/v1/chat/completions "HTTP/1.1 200 OK"
+2026-06-30 00:00:33,192 [INFO] HTTP Request: POST https://api.stepfun.com/step_plan/v1/chat/completions "HTTP/1.1 200 OK"
+2026-06-30 00:00:36,325 [INFO] HTTP Request: POST https://api.stepfun.com/step_plan/v1/chat/completions "HTTP/1.1 200 OK"
+2026-06-30 00:00:55,496 [INFO] HTTP Request: POST https://api.stepfun.com/step_plan/v1/chat/completions "HTTP/1.1 200 OK"
+2026-06-30 00:01:02,637 [INFO] HTTP Request: POST https://api.stepfun.com/step_plan/v1/chat/completions "HTTP/1.1 200 OK"
+2026-06-30 00:01:03,101 [WARNING] 回答可能被截断，用更大预算重试
+2026-06-30 00:01:04,605 [INFO] HTTP Request: POST https://api.stepfun.com/step_plan/v1/chat/completions "HTTP/1.1 200 OK"
+2026-06-30 00:01:07,301 [INFO] HTTP Request: POST https://api.stepfun.com/step_plan/v1/chat/completions "HTTP/1.1 200 OK"
+2026-06-30 00:01:08,906 [ERROR] API最终失败: None
+2026-06-30 00:01:13,048 [INFO] HTTP Request: POST https://api.stepfun.com/step_plan/v1/chat/completions "HTTP/1.1 200 OK"
