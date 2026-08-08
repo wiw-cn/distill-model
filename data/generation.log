@@ -47890,3 +47890,8 @@
 2026-08-08 21:41:50,234 [INFO] HTTP Request: POST https://api.stepfun.com/step_plan/v1/chat/completions "HTTP/1.1 200 OK"
 2026-08-08 21:43:00,224 [ERROR] API最终失败: Request timed out.
 2026-08-08 21:43:02,436 [INFO] HTTP Request: POST https://api.stepfun.com/step_plan/v1/chat/completions "HTTP/1.1 200 OK"
+2026-08-08 21:43:04,771 [INFO] Git 自动推送成功 (批次 276)
+2026-08-08 21:43:04,772 [INFO] 进度: 320/500 | 成功: 276 | 缓存: 47 | Key统计: {'ZCGGo2yU...': {'success': 0, 'fail': 0, '429': 0}}
+2026-08-08 21:43:20,854 [INFO] HTTP Request: POST https://api.stepfun.com/step_plan/v1/chat/completions "HTTP/1.1 200 OK"
+2026-08-08 21:43:24,148 [INFO] HTTP Request: POST https://api.stepfun.com/step_plan/v1/chat/completions "HTTP/1.1 200 OK"
+2026-08-08 21:43:30,360 [INFO] HTTP Request: POST https://api.stepfun.com/step_plan/v1/chat/completions "HTTP/1.1 200 OK"
